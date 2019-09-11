@@ -7,8 +7,7 @@ public class Valley
     private String [] colores= {"green","magenta","red","white"};
     private int numRandon;
     private Rectangle valle;
-    private Rectangle viñedo;
-    private ArrayList<Rectangle> listaviñedo=new ArrayList<Rectangle>();
+    private ArrayList<Vineyard> listaviñedo=new ArrayList<Vineyard>();
     private ArrayList<String> names=new ArrayList<String>();
     private int y;
     private Trap creacion;
@@ -18,45 +17,40 @@ public class Valley
     private ArrayList<ArrayList<Integer>> post = new ArrayList<ArrayList<Integer>>();
     private int[] lowerEnd=new int[100];
     private int[] higherEnd=new int[100];
+    private Vineyard viñedo;
     public Valley(int width,int height)
     {
         valle= new Rectangle(width,height);
         y=height;
-        valle.makeVisible();
     }
+
     public void openVineyard(String name,int xi,int xf){
-        if(xinicial.size()!=0){
-            for(int i=0;i< xinicial.size();i++){
-                if((xi<=xfinal.get(i) && xfinal.get(i)<=xf) || (xi<=xinicial.get(i) && xinicial.get(i)<=xf) || (xinicial.get(i)<=xi && xf<=xfinal.get(i)) || (xi<=xinicial.get(i) && xfinal.get(i)<=xf)){
-                   System.out.println("En las coordenadas ingresadas ya se encuentra un viñedo");
-                   break;
-                }else{
-                    viñedo= new Rectangle(xf-xi,10);
-                    numRandon = (int) Math.round(Math.random() * 4 ); 
-                    viñedo.changeColor(colores[numRandon]);
-                    viñedo.moveHorizontal(xi);
-                    viñedo.moveVertical(y-10);
-                    viñedo.makeVisible();
-                    listaviñedo.add(viñedo);
-                    xinicial.add(xi);
-                    xfinal.add(xf);
-                    names.add(name);
-                    break;
-                }
+        boolean verificar=true;
+        for(int i=0;i< xinicial.size();i++){
+            if((xi<=xfinal.get(i) && xfinal.get(i)<=xf) || (xi<=xinicial.get(i) && xinicial.get(i)<=xf) || (xinicial.get(i)<=xi && xf<=xfinal.get(i)) || (xi<=xinicial.get(i) && xfinal.get(i)<=xf)){
+                System.out.println("En las coordenadas ingresadas ya se encuentra un viñedo");
+                verificar=false;
+                break;
             }
-        }else{
-            viñedo= new Rectangle(xf-xi,10);
-            numRandon = (int) Math.round(Math.random() * 4 ); 
-            viñedo.changeColor(colores[numRandon]);
-            viñedo.moveHorizontal(xi);
+        }
+        if(verificar){
+            viñedo= new Vineyard(name,xi,xf);
             viñedo.moveVertical(y-10);
-            viñedo.makeVisible();
             listaviñedo.add(viñedo);
             xinicial.add(xi);
             xfinal.add(xf);
             names.add(name);
         }
     }
+
+    public void makeVisible(){
+        valle.makeVisible();
+        for(Vineyard viñedo: listaviñedo){
+            viñedo.makeVisible();
+        }
+        
+    }
+
     public void closeVineyard(String name){
         for(int i=0;i<names.size();i++){
             if(name==names.get(i)){
@@ -68,6 +62,7 @@ public class Valley
             }
         }
     }
+
     public void addTrap(int[] lowerEnd,int[] higherEnd){
         ArrayList<ArrayList<Integer>> matrizPost=new ArrayList<ArrayList<Integer>>();
         int pendiente=(higherEnd[1]-lowerEnd[1])/(higherEnd[0]-lowerEnd[0]);
@@ -85,6 +80,7 @@ public class Valley
             System.out.println("NO SE PUEDE AGREGAR");
         }
     }
+
     public boolean validar(ArrayList<ArrayList<Integer>> matrizComparar){
         boolean valorValidar=true;
         System.out.println("seraquesi");
@@ -99,11 +95,13 @@ public class Valley
         }
         return valorValidar;
     }
+
     public void guardar(ArrayList<ArrayList<Integer>> matrizGuardar){
         for(int i=0;i<matrizGuardar.size();i++){
             post.add(matrizGuardar.get(i));
         }
     }
+
     public void crear(int[] lowerEnd,int[] higherEnd){
         this.lowerEnd=lowerEnd;
         this.higherEnd=higherEnd;
