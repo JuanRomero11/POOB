@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Trap
-comment1.params=iniciales\ finales
+comment1.params=higherEnd\ lowerEnd
 comment1.target=Trap(int[],\ int[])
 comment2.params=
 comment2.target=void\ draw()
@@ -10,4 +10,12 @@ comment4.params=
 comment4.target=void\ makeInvisible()
 comment5.params=
 comment5.target=void\ erase()
-numComments=6
+comment6.params=distance
+comment6.target=void\ moveHorizontal(int)
+comment7.params=distance
+comment7.target=void\ moveVertical(int)
+comment8.params=trapComparar
+comment8.target=boolean\ validar(Trap)
+comment9.params=posicion\ listaPosiciones
+comment9.target=boolean\ compararPosiciones(java.util.ArrayList,\ java.util.ArrayList)
+numComments=10

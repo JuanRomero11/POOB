@@ -1,6 +1,6 @@
 package shapes;
-
-
+import java.util.*;
+import java.awt.geom.Area;
 /**
  * Write a description of class Vineyard here.
  *
@@ -18,12 +18,11 @@ public class Vineyard
     public Vineyard(String name,int xi,int xf)
     {
         String [] colores= {"green","magenta","red","white"};
-        int numRandon;
+        int numRandom;
         viñedo= new Rectangle(xf-xi,10);
-        numRandon = (int) Math.round(Math.random() * 4 ); 
-        viñedo.changeColor("white");
+        numRandom = (int) Math.round(Math.random() * 4 ); 
+        viñedo.changeColor(colores[numRandom]);
         viñedo.moveHorizontal(xi);
-        //viñedo.moveVertical(10);
         xinicial=(xi);
         xfinal=(xf);
 

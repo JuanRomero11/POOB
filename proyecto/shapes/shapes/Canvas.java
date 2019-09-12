@@ -20,9 +20,7 @@ public class Canvas{
     // shape identity and colors) is slightly more complex than necessary. This
     // is done on purpose to keep the interface and instance fields of the
     // shape objects in this project clean and simple for educational purposes.
-
     private static Canvas canvasSingleton;
-
     /**
      * Factory method to get the canvas singleton object.
      */
@@ -34,9 +32,7 @@ public class Canvas{
         canvasSingleton.setVisible(true,true);
         return canvasSingleton;
     }
-
     //  ----- instance part -----
-
     private JFrame frame;
     private CanvasPane canvas;
     private Graphics2D graphic;
@@ -44,7 +40,6 @@ public class Canvas{
     private Image canvasImage;
     private List <Object> objects;
     private HashMap <Object,ShapeDescription> shapes;
-    
     /**
      * Create a Canvas.
      * @param title  title to appear in Canvas Frame
@@ -75,7 +70,6 @@ public class Canvas{
         if(graphic == null) {
             // first time: instantiate the offscreen image and fill it with
             // the background colour
-           
                 /*
                 Dimension size = canvas.getSize();
                 canvasImage = canvas.createImage(size.width, size.height);
@@ -84,16 +78,12 @@ public class Canvas{
                 graphic.setColor(backgroundColour);
                 graphic.fillRect(0, 0, size.width, size.height);
                 graphic.setColor(Color.black);*/
-               
-            
                 Dimension size = canvas.getSize();
                 canvasImage = canvas.createImage(size.width, size.height);
                 graphic = (Graphics2D)canvasImage.getGraphics();               
                 graphic.setColor(backgroundColour);
                 graphic.fillRect(0, 0, size.width, size.height);
                 graphic.setColor(Color.white);
-            
-            
         }
         frame.setVisible(visible);
     }
