@@ -14,6 +14,7 @@ public class Trap
     private int[] finales=new  int[100];
     private boolean isVisible;
     private ArrayList<ArrayList<Integer>> matrizComparar;
+    private ArrayList<Puncture> punctures;
     public Trap(int[]  higherEnd,int[] lowerEnd)
     {
         this.iniciales=higherEnd;
@@ -77,13 +78,14 @@ public class Trap
         boolean valorValidar=true;
         System.out.println(matrizComparar);
         for(int i=0;i<matrizComparar.size();i++){
-           if(compararPosiciones(matrizComparar.get(i),trapComparar.matrizComparar)){
-               valorValidar=false;
-               break;
+            if(compararPosiciones(matrizComparar.get(i),trapComparar.matrizComparar)){
+                valorValidar=false;
+                break;
             }
         }
         return valorValidar;
     }
+
     public boolean compararPosiciones(ArrayList<Integer> posicion,ArrayList<ArrayList<Integer>> listaPosiciones){
         boolean valorValidar=false;
         for(int i=0;i<listaPosiciones.size();i++){
@@ -93,5 +95,32 @@ public class Trap
             }
         }
         return valorValidar;
+    }
+
+    public void remove(){
+        erase();
+        isVisible = false;
+    }
+
+    public void makePuncture(int x){
+        ArrayList<ArrayList<Integer>> huecos=new ArrayList<ArrayList<Integer>>();
+        boolean bandera=true;
+        int y=0;
+        for(int i=0;i<matrizComparar.size();i++){
+            if(matrizComparar.get(i).get(0)==x && huecos.contains(matrizComparar.get(i))==false){
+                matrizComparar.remove(i);
+                huecos.add(matrizComparar.get(i)); 
+                y=matrizComparar.get(i).get(1);
+            }
+            else{
+                bandera=false;
+            }
+        }
+        if(bandera){
+            punctures.add(new Puncture(x,y,huecos));
+        }
+    }
+    public void visiblePuncture(int x){
+        makeVisible();
     }
 }

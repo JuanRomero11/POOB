@@ -6,7 +6,7 @@ public class Valley
     // instance variables - replace the example below with your own
     private Rectangle valle;
     private ArrayList<Vineyard> listaviñedo=new ArrayList<Vineyard>();
-    private ArrayList<String> names=new ArrayList<String>();
+    private ArrayList<String> namesViñedos=new ArrayList<String>();
     private int width;
     private int height;
     private Trap creacion;
@@ -36,7 +36,7 @@ public class Valley
             listaviñedo.add(viñedo);
             xinicial.add(xi);
             xfinal.add(xf);
-            names.add(name);
+            namesViñedos.add(name);
         }
     }
 
@@ -51,9 +51,9 @@ public class Valley
     }
 
     public void closeVineyard(String name){
-        for(int i=0;i<names.size();i++){
-            if(name==names.get(i)){
-                names.remove(i);
+        for(int i=0;i<namesViñedos.size();i++){
+            if(name==namesViñedos.get(i)){
+                namesViñedos.remove(i);
                 xinicial.remove(i);
                 xfinal.remove(i);
                 listaviñedo.get(i).makeInvisible();
@@ -64,6 +64,10 @@ public class Valley
 
     public void addTrap(int[] higherEnd,int[] lowerEnd){
         Trap nuevoTrap=new Trap(higherEnd,lowerEnd);
+        higherEnd[0]=Math.abs(higherEnd[0]-width);
+        higherEnd[1]=Math.abs(higherEnd[1]-height);
+        lowerEnd[0]=Math.abs(lowerEnd[0]-width);
+        lowerEnd[1]=Math.abs(lowerEnd[1]-height);
         if(traps.size()==0){
             traps.add(nuevoTrap);
         }else{
@@ -81,5 +85,12 @@ public class Valley
             }
         }
     }
-
+    public void removeTrap(int position){
+        traps.get(position).remove();
+        traps.remove(position);
+        traps.get(position).makeInvisible();
+    }
+    public void makePuncture(int position,int x){
+        traps.get(position).makePuncture(x);
+    }
 }

@@ -24,7 +24,7 @@ public class Circle{
      * Create a new circle at default position with default color.
      */
     public Circle(){
-        diameter = 30;
+        diameter = 30   ;
         xPosition = 20;
         yPosition = 15;
         color = "blue";
