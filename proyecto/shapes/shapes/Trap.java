@@ -1,3 +1,4 @@
+
 package shapes;
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class Trap
             Canvas canvas = Canvas.getCanvas();
             int[] xpoints = { finales[0]-10, iniciales[0]-10,iniciales[0],finales[0] };
             int[] ypoints = { finales[1], iniciales[1], iniciales[1],finales[1]};
-            canvas.draw(this,"blue", new Polygon(xpoints, ypoints, 4));
+            canvas.draw(this,"black", new Polygon(xpoints, ypoints, 4));
             canvas.wait(10);
         }
     }
@@ -102,25 +103,20 @@ public class Trap
         isVisible = false;
     }
 
-    public void makePuncture(int x){
-        ArrayList<ArrayList<Integer>> huecos=new ArrayList<ArrayList<Integer>>();
-        boolean bandera=true;
-        int y=0;
+    /**
+     * return a boolean and verifies if the puncture coordinate is inside the traps coordinate
+     * @return
+     */
+    public boolean verificateCoordinates(int x,int y){
+        Boolean verificar=false;
         for(int i=0;i<matrizComparar.size();i++){
-            if(matrizComparar.get(i).get(0)==x && huecos.contains(matrizComparar.get(i))==false){
+            System.out.println(matrizComparar.get(i));
+            if(x==matrizComparar.get(i).get(0) && y==matrizComparar.get(i).get(1)){
                 matrizComparar.remove(i);
-                huecos.add(matrizComparar.get(i)); 
-                y=matrizComparar.get(i).get(1);
-            }
-            else{
-                bandera=false;
+                verificar=true;
+                break;
             }
         }
-        if(bandera){
-            punctures.add(new Puncture(x,y,huecos));
-        }
-    }
-    public void visiblePuncture(int x){
-        makeVisible();
+        return verificar;
     }
 }

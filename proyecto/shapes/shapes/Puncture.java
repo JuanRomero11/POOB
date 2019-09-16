@@ -16,7 +16,7 @@ import java.util.*;
 public class Puncture{
 
     public static double PI=3.1416;
-    
+
     private int diameter;
     private int xPosition;
     private int yPosition;
@@ -24,11 +24,11 @@ public class Puncture{
     private boolean isVisible;
     private ArrayList<ArrayList<Integer>> huecos;
     /**
-     * Create a new circle at default position with default color.
+     * Create a new circle at default position with default color.public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
      */
-    public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
+    public Puncture(int xposition,int yposition){
         this.huecos=huecos;
-        diameter = 30   ;
+        diameter = 15;
         this.xPosition = xposition;
         this.yPosition = yposition;
         color = "green";
@@ -42,7 +42,7 @@ public class Puncture{
         isVisible = true;
         draw();
     }
-    
+
     /**
      * Make this circle invisible. If it was already invisible, do nothing.
      */
@@ -50,7 +50,7 @@ public class Puncture{
         erase();
         isVisible = false;
     }
-    
+
     /**
      * Move the circle a few pixels to the right.
      */
@@ -98,6 +98,7 @@ public class Puncture{
         yPosition += distance;
         draw();
     }
+
     /**
      * Change the size.
      * @param newDiameter the new size (in pixels). Size must be >=0.
@@ -117,16 +118,29 @@ public class Puncture{
         color = newColor;
         draw();
     }
+    /**
+     * Create the puncture inside the Valley class
+     */
+    public void Coordinates(int x,int y){
+        
+        if(isVisible){
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, 
+                new Ellipse2D.Double(x,y, 
+                    diameter, diameter));
+            canvas.wait(10);
+        }
+    }
 
     /*
      * Draw the circle with current specifications on screen.
      */
-    private void draw(){
+    public void draw(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             canvas.draw(this, color, 
                 new Ellipse2D.Double(xPosition, yPosition, 
-                diameter, diameter));
+                    diameter, diameter));
             canvas.wait(10);
         }
     }
@@ -141,3 +155,4 @@ public class Puncture{
         }
     }
 }
+
