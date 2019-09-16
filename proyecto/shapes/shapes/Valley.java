@@ -171,6 +171,7 @@ public class Valley
                     posicionInicial=posicionRectangle;
                     posicionInicial.set(1,Math.abs(posicionInicial.get(1)-height));
                     posicionFinal=traps.get(i).puntofinal(posicionInicial);
+                    System.out.println(posicionInicial+" "+posicionFinal);
                     posicionFinal.set(1,Math.abs(posicionFinal.get(1)-height));
                     Rain lluviaTrap= new Rain(posicionInicial,posicionFinal);
                     lluvia.add(lluviaTrap);

@@ -115,22 +115,26 @@ public class Trap
 
     public ArrayList<Integer> puntofinal(ArrayList<Integer> puntoInicial){
         ArrayList<Integer> puntofinal=new ArrayList<Integer> ();
+        if(matrizComparar.contains(puntoInicial)){
+            System.out.println("entre");
+        }
         for(int i=0;i<matrizComparar.size();i++){
             if(matrizComparar.get(i).get(0)==puntoInicial.get(0) && matrizComparar.get(i).get(1)==puntoInicial.get(1)){
-                for(int j=i;j<matrizComparar.size();j++){
+                for(int j=puntoInicial.get(0);j<matrizComparar.get(i).get(0)+1;j++){
                     ArrayList<Integer> localPost=new ArrayList<Integer>();
-                    localPost.add(i);
+                    localPost.add(j);
                     localPost.add((j*pendiente)+corte);
                     if(matrizComparar.contains(localPost)==false){
                         puntofinal=localPost;
                         break;
-                    }else if(j+1==matrizComparar.size()){
-                        puntofinal=matrizComparar.get(j);
+                    }else if(j==matrizComparar.get(i).get(0) && (matrizComparar.contains(localPost))){
+                        puntofinal=matrizComparar.get(matrizComparar.size()-1);
                         break;
                     }
                 }
             }
         }
+        System.out.println(puntofinal);
         return puntofinal;
     }
 
