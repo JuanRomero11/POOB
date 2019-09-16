@@ -1,4 +1,5 @@
 
+
 package shapes;
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,10 @@ public class Trap
             canvas.wait(10);
         }
     }
-
+    public void changeColor(String newColor){
+		color = newColor;
+		draw();
+    }
     public void makeVisible(){
         isVisible = true;
         draw();
