@@ -7,6 +7,7 @@ public class Valley
     // instance variables - replace the example below with your own
     private Rectangle valle;
     private ArrayList<Vineyard> listaviñedo=new ArrayList<Vineyard>();
+    private ArrayList<Rain> lluvia=new ArrayList<Rain>();
     private ArrayList<String> namesViñedos=new ArrayList<String>();
     private int width;
     private int height;
@@ -58,6 +59,9 @@ public class Valley
         }
         for(Puncture onePuncture: punctures){
             onePuncture.makeVisible();
+        }
+        for(Rain llover: lluvia){
+            llover.makeVisible();
         }
     }
     /**
@@ -148,6 +152,40 @@ public class Valley
         }else{
             System.out.println("No hay hueco en esa coordenada");
         }
+    }
+    public void startRain(int x){
+       ArrayList<Integer> posicionLados=new ArrayList<Integer>();
+       posicionLados.add(x);
+       posicionLados.add(x+10);
+       for(int k=0;k<posicionLados.size();k++){
+        ArrayList<Integer> posicionRectangle=new ArrayList<Integer>();
+        posicionRectangle.add(posicionLados.get(k));
+        posicionRectangle.add(0);
+        ArrayList<Integer> posicionInicial=new ArrayList<Integer>();
+        ArrayList<Integer> posicionFinal=new ArrayList<Integer>();
+        while(posicionRectangle.get(1)!=height-10 ){
+            for(int i=0;i<traps.size();i++){
+                if(traps.get(i).compararPosicion(posicionRectangle)){
+                    Rain lluviaRectangle= new Rain(posicionRectangle.get(0),Math.abs(posicionRectangle.get(1)-height));
+                    lluvia.add(lluviaRectangle);
+                    posicionInicial=posicionRectangle;
+                    posicionInicial.set(1,Math.abs(posicionInicial.get(1)-height));
+                    posicionFinal=traps.get(i).puntofinal(posicionInicial);
+                    posicionFinal.set(1,Math.abs(posicionFinal.get(1)-height));
+                    Rain lluviaTrap= new Rain(posicionInicial,posicionFinal);
+                    lluvia.add(lluviaTrap);
+                    posicionRectangle.set(0,posicionFinal.get(0));
+                    posicionRectangle.set(1,posicionFinal.get(1));
+                    break;
+                }
+                else if(i+1==traps.size()){
+                    posicionRectangle.set(1,posicionRectangle.get(1)+1);
+                    break;
+                }
+            }
+            
+        }
+    }
     }
 }
 

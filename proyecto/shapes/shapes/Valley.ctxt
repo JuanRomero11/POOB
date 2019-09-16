@@ -22,4 +22,6 @@ comment7.text=\r\n\ Create\ the\ punctures\ in\ the\ traps\r\n
 comment8.params=position
 comment8.target=void\ removePuncture(int)
 comment8.text=\r\n\ Remove\ the\ punctures\ one\ by\ one\r\n
-numComments=9
+comment9.params=x
+comment9.target=void\ startRain(int)
+numComments=10

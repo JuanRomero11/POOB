@@ -1,5 +1,4 @@
 
-
 package shapes;
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +14,8 @@ public class Trap
     private int[] iniciales=new int[100];
     private int[] finales=new  int[100];
     private boolean isVisible;
+    private int pendiente;
+    private int corte;
     private ArrayList<ArrayList<Integer>> matrizComparar;
     private ArrayList<Puncture> punctures;
     public Trap(int[]  higherEnd,int[] lowerEnd)
@@ -22,8 +23,8 @@ public class Trap
         this.iniciales=higherEnd;
         this.finales=lowerEnd;
         matrizComparar=new ArrayList<ArrayList<Integer>>();
-        int pendiente=(lowerEnd[1]-higherEnd[1])/(lowerEnd[0]-higherEnd[0]);
-        int corte=(higherEnd[1]-(pendiente*higherEnd[0]));
+        pendiente=(lowerEnd[1]-higherEnd[1])/(lowerEnd[0]-higherEnd[0]);
+        corte=(higherEnd[1]-(pendiente*higherEnd[0]));
         for(int j=0;j<10;j++){
             for(int i=higherEnd[0]-j;i<lowerEnd[0]-j;i++){
                 ArrayList<Integer> localPost=new ArrayList<Integer>();
@@ -44,10 +45,12 @@ public class Trap
             canvas.wait(10);
         }
     }
+
     public void changeColor(String newColor){
-		color = newColor;
-		draw();
+        color = newColor;
+        draw();
     }
+
     public void makeVisible(){
         isVisible = true;
         draw();
@@ -100,6 +103,35 @@ public class Trap
             }
         }
         return valorValidar;
+    }
+
+    public boolean compararPosicion(ArrayList<Integer> posicion){
+        boolean valorValidar=false;
+        if(matrizComparar.contains(posicion)){
+            valorValidar=true;
+        }
+        return valorValidar;
+    }
+
+    public ArrayList<Integer> puntofinal(ArrayList<Integer> puntoInicial){
+        ArrayList<Integer> puntofinal=new ArrayList<Integer> ();
+        for(int i=0;i<matrizComparar.size();i++){
+            if(matrizComparar.get(i).get(0)==puntoInicial.get(0) && matrizComparar.get(i).get(1)==puntoInicial.get(1)){
+                for(int j=i;j<matrizComparar.size();j++){
+                    ArrayList<Integer> localPost=new ArrayList<Integer>();
+                    localPost.add(i);
+                    localPost.add((j*pendiente)+corte);
+                    if(matrizComparar.contains(localPost)==false){
+                        puntofinal=localPost;
+                        break;
+                    }else if(j+1==matrizComparar.size()){
+                        puntofinal=matrizComparar.get(j);
+                        break;
+                    }
+                }
+            }
+        }
+        return puntofinal;
     }
 
     public void remove(){
