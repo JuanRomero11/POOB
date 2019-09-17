@@ -1,4 +1,4 @@
-
+ 
 package shapes;
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +11,11 @@ public class Trap
     private int xPosition;
     private int yPosition;
     private String color;
-    private int[] iniciales=new int[100];
-    private int[] finales=new  int[100];
+    private int[] iniciales;
+    private int[] finales;
     private boolean isVisible;
     private int pendiente;
+    private int distance=10;
     private int corte;
     private ArrayList<ArrayList<Integer>> matrizComparar;
     private ArrayList<Puncture> punctures;
@@ -39,7 +40,7 @@ public class Trap
     private void draw(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
-            int[] xpoints = { finales[0]-10, iniciales[0]-10,iniciales[0],finales[0] };
+            int[] xpoints = { finales[0]-distance, iniciales[0]-distance,iniciales[0],finales[0] };
             int[] ypoints = { finales[1], iniciales[1], iniciales[1],finales[1]};
             canvas.draw(this,"black", new Polygon(xpoints, ypoints, 4));
             canvas.wait(10);
@@ -77,8 +78,8 @@ public class Trap
 
     public void moveVertical(int distance){
         erase();
-        iniciales[1]=Math.abs(iniciales[1]-distance);
-        finales[1]=Math.abs(iniciales[1]-distance);
+        iniciales[1]=Math.abs(iniciales[1]+distance);
+        finales[1]=Math.abs(finales[1]+distance);
         draw();
     }
 
@@ -112,7 +113,12 @@ public class Trap
         }
         return valorValidar;
     }
-
+    public void changeSize(int newHeight,int x) {
+        erase();
+        distance = newHeight;
+        moveVertical(x);
+        draw();
+    }
     public ArrayList<Integer> puntofinal(ArrayList<Integer> puntoInicial){
         ArrayList<Integer> puntofinal=new ArrayList<Integer> ();
         if(matrizComparar.contains(puntoInicial)){

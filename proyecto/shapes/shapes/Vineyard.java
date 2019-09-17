@@ -15,6 +15,7 @@ public class Vineyard
     private int xfinal;
     private String color;
     private boolean isVisible;
+    private int distance=10;
     public Vineyard(String name,int xi,int xf)
     {
         String [] colores= {"green","magenta","red","white"};
@@ -37,5 +38,10 @@ public class Vineyard
     }
     public void moveVertical(int distance){
             viñedo.moveVertical(distance);
-        }
+     }
+    public void changeSize(int x){
+        distance+=x;
+        viñedo.changeSize(10,(xfinal-xinicial)+x);
+        viñedo.moveVertical(x);
+    }
 }

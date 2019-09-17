@@ -9,4 +9,6 @@ comment3.params=
 comment3.target=void\ makeInvisible()
 comment4.params=distance
 comment4.target=void\ moveVertical(int)
-numComments=5
+comment5.params=x
+comment5.target=void\ changeSize(int)
+numComments=6

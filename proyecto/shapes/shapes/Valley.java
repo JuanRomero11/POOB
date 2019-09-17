@@ -19,14 +19,14 @@ public class Valley
     private Vineyard viñedo;
     private int[] Higher;
     private int[] Lower;
-    ArrayList<Integer> huecosX=new ArrayList<Integer>();
-    ArrayList<Integer> huecosY=new ArrayList<Integer>();
+    private int distance=0;
     public Valley(int width,int height)
     {
         valle= new Rectangle(width,height);
         this.width=width;
         this.height=height;
     }
+
     /**
      * Create the vineyards in the valley
      */
@@ -64,6 +64,23 @@ public class Valley
             llover.makeVisible();
         }
     }
+
+    public void Zoom(int x){
+        valle.changeSize(width+x,height+x);
+        for(Vineyard viñedo: listaviñedo){
+            viñedo.changeSize(x);
+        }
+        for(Trap oneTrap: traps){
+            oneTrap.changeSize(10,x);
+        }
+        for(Puncture onePuncture: punctures){
+            onePuncture.changeSize(10);
+        }
+        for(Rain llover: lluvia){
+            llover.changeSize(10);
+        }
+    }
+
     /**
      * Close the vineyards with the name
      */
@@ -78,6 +95,7 @@ public class Valley
             }
         }
     }
+
     /**
      * Create the traps in the valley
      */
@@ -106,6 +124,7 @@ public class Valley
             }
         }
     }
+
     /**
      * Remove the traps one by one
      */
@@ -114,10 +133,13 @@ public class Valley
         traps.remove(position);
         traps.get(position).makeInvisible();
     }
+
     /**
      * Create the punctures in the traps
      */
     public void makePuncture(int x,int y){
+        ArrayList<Integer> huecosX=new ArrayList<Integer>();
+    ArrayList<Integer> huecosY=new ArrayList<Integer>();
         //x=Math.abs(x-width);
         y=Math.abs(y-height);       
         Puncture nuevoPuncture=new Puncture(x,y);
@@ -138,6 +160,7 @@ public class Valley
         }
 
     }
+
     /**
      * Remove the punctures one by one
      */
@@ -153,41 +176,41 @@ public class Valley
             System.out.println("No hay hueco en esa coordenada");
         }
     }
+
     public void startRain(int x){
-       ArrayList<Integer> posicionLados=new ArrayList<Integer>();
-       posicionLados.add(x);
-       posicionLados.add(x+10);
-       for(int k=0;k<posicionLados.size();k++){
-        ArrayList<Integer> posicionRectangle=new ArrayList<Integer>();
-        posicionRectangle.add(posicionLados.get(k));
-        posicionRectangle.add(0);
-        ArrayList<Integer> posicionInicial=new ArrayList<Integer>();
-        ArrayList<Integer> posicionFinal=new ArrayList<Integer>();
-        while(posicionRectangle.get(1)!=height-10 ){
-            for(int i=0;i<traps.size();i++){
-                if(traps.get(i).compararPosicion(posicionRectangle)){
-                    Rain lluviaRectangle= new Rain(posicionRectangle.get(0),Math.abs(posicionRectangle.get(1)-height));
-                    lluvia.add(lluviaRectangle);
-                    posicionInicial=posicionRectangle;
-                    posicionInicial.set(1,Math.abs(posicionInicial.get(1)-height));
-                    posicionFinal=traps.get(i).puntofinal(posicionInicial);
-                    System.out.println(posicionInicial+" "+posicionFinal);
-                    posicionFinal.set(1,Math.abs(posicionFinal.get(1)-height));
-                    Rain lluviaTrap= new Rain(posicionInicial,posicionFinal);
-                    lluvia.add(lluviaTrap);
-                    posicionRectangle.set(0,posicionFinal.get(0));
-                    posicionRectangle.set(1,posicionFinal.get(1));
-                    break;
+        ArrayList<Integer> posicionLados=new ArrayList<Integer>();
+        posicionLados.add(x);
+        posicionLados.add(x+10);
+        for(int k=0;k<posicionLados.size();k++){
+            ArrayList<Integer> posicionRectangle=new ArrayList<Integer>();
+            posicionRectangle.add(posicionLados.get(k));
+            posicionRectangle.add(0);
+            ArrayList<Integer> posicionInicial=new ArrayList<Integer>();
+            ArrayList<Integer> posicionFinal=new ArrayList<Integer>();
+            while(posicionRectangle.get(1)!=height-10 ){
+                for(int i=0;i<traps.size();i++){
+                    if(traps.get(i).compararPosicion(posicionRectangle)){
+                        Rain lluviaRectangle= new Rain(posicionRectangle.get(0),Math.abs(posicionRectangle.get(1)-height));
+                        lluvia.add(lluviaRectangle);
+                        posicionInicial=posicionRectangle;
+                        posicionInicial.set(1,Math.abs(posicionInicial.get(1)-height));
+                        posicionFinal=traps.get(i).puntofinal(posicionInicial);
+                        System.out.println(posicionInicial+" "+posicionFinal);
+                        posicionFinal.set(1,Math.abs(posicionFinal.get(1)-height));
+                        Rain lluviaTrap= new Rain(posicionInicial,posicionFinal);
+                        lluvia.add(lluviaTrap);
+                        posicionRectangle.set(0,posicionFinal.get(0));
+                        posicionRectangle.set(1,posicionFinal.get(1));
+                        break;
+                    }
+                    else if(i+1==traps.size()){
+                        posicionRectangle.set(1,posicionRectangle.get(1)+1);
+                        break;
+                    }
                 }
-                else if(i+1==traps.size()){
-                    posicionRectangle.set(1,posicionRectangle.get(1)+1);
-                    break;
-                }
+
             }
-            
         }
     }
-    }
 }
-
 

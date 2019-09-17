@@ -35,6 +35,7 @@
             isVisible = false;
         }
             
+        
         /**
          * Make this rectangle visible. If it was already visible, do nothing.
          */
@@ -163,7 +164,10 @@
             color = newColor;
             draw();
         }
-
+        public int[] getmedidas(){
+            int[] posicion=new int[]{width,height};
+            return posicion;
+        }
         /*
          * Draw the rectangle with current specifications on screen.
          */
