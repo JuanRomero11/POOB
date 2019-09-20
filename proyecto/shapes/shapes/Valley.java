@@ -65,19 +65,38 @@ public class Valley
         }
     }
 
-    public void Zoom(int x){
-        valle.changeSize(width+x,height+x);
-        for(Vineyard viñedo: listaviñedo){
-            viñedo.changeSize(x);
+    public void Zoom(String x){
+        if(x=="+"){
+            valle.changeSize(width+50,height+50);
+            for(Vineyard viñedo: listaviñedo){
+                viñedo.changeSize(50);
+            }
+            for(Trap oneTrap: traps){
+                oneTrap.changeSize(10,50);
+            }
+            for(Puncture onePuncture: punctures){
+                onePuncture.changeSize(10);
+            }
+            for(Rain llover: lluvia){
+                llover.changeSize(10);
+            } 
+            
         }
-        for(Trap oneTrap: traps){
-            oneTrap.changeSize(10,x);
-        }
-        for(Puncture onePuncture: punctures){
-            onePuncture.changeSize(10);
-        }
-        for(Rain llover: lluvia){
-            llover.changeSize(10);
+        if(x=="-"){
+            valle.changeSize(width-50,height-50);
+            for(Vineyard viñedo: listaviñedo){
+                viñedo.changeSize(-50);
+            }
+            for(Trap oneTrap: traps){
+                oneTrap.changeSize(10,-50);
+            }
+            for(Puncture onePuncture: punctures){
+                onePuncture.changeSize(10);
+            }
+            for(Rain llover: lluvia){
+                llover.changeSize(10);
+            } 
+
         }
     }
 
@@ -139,7 +158,7 @@ public class Valley
      */
     public void makePuncture(int x,int y){
         ArrayList<Integer> huecosX=new ArrayList<Integer>();
-    ArrayList<Integer> huecosY=new ArrayList<Integer>();
+        ArrayList<Integer> huecosY=new ArrayList<Integer>();
         //x=Math.abs(x-width);
         y=Math.abs(y-height);       
         Puncture nuevoPuncture=new Puncture(x,y);
