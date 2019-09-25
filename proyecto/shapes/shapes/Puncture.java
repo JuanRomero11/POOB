@@ -22,19 +22,22 @@ public class Puncture{
     private int yPosition;
     private String color;
     private boolean isVisible;
+    
     private ArrayList<ArrayList<Integer>> huecos;
     /**
      * Create a new circle at default position with default color.public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
      */
-    public Puncture(int xposition,int yposition){
+    public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
         this.huecos=huecos;
         diameter = 15;
         this.xPosition = xposition;
-        this.yPosition = yposition;
-        color = "green";
+        this.yPosition = yposition-20;
+        color = "yellow";
         isVisible = false;
     }
-
+    public ArrayList<Integer> punctureSuperficial(){
+        return huecos.get(0);
+    }
     /**
      * Make this circle visible. If it was already visible, do nothing.
      */

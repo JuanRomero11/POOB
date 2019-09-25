@@ -1,4 +1,4 @@
- 
+
 package shapes;
 import javax.swing.*;
 import java.awt.*;
@@ -19,19 +19,31 @@ public class Trap
     private int corte;
     private ArrayList<ArrayList<Integer>> matrizComparar;
     private ArrayList<Puncture> punctures;
+    private ArrayList<ArrayList<Integer>> superficialPunctures;
+    private ArrayList<ArrayList<Integer>> superficialTrap;
     public Trap(int[]  higherEnd,int[] lowerEnd)
     {
         this.iniciales=higherEnd;
         this.finales=lowerEnd;
         matrizComparar=new ArrayList<ArrayList<Integer>>();
+        punctures=new ArrayList<Puncture>();
+        superficialTrap=new ArrayList<ArrayList<Integer>>();
         pendiente=(lowerEnd[1]-higherEnd[1])/(lowerEnd[0]-higherEnd[0]);
         corte=(higherEnd[1]-(pendiente*higherEnd[0]));
+        ArrayList<Integer> lower=new ArrayList<Integer>();
+        lower.add(lowerEnd[0]);
+        lower.add(lowerEnd[1]);
+        superficialTrap.add(lower);
         for(int j=0;j<10;j++){
             for(int i=higherEnd[0]-j;i<lowerEnd[0]-j;i++){
                 ArrayList<Integer> localPost=new ArrayList<Integer>();
                 localPost.add(i);
                 localPost.add((i*pendiente)+corte);
                 matrizComparar.add(localPost);
+                System.out.println(localPost);
+                if(j==0){
+                    superficialTrap.add(localPost);
+                }
             }
         }
         isVisible = false;
@@ -55,11 +67,17 @@ public class Trap
     public void makeVisible(){
         isVisible = true;
         draw();
+        for(int i=0;i<punctures.size();i++){
+            punctures.get(i).makeVisible();
+        }
     }
 
     public void makeInvisible(){
         erase();
         isVisible = false;
+        for(int i=0;i<punctures.size();i++){
+            punctures.get(i).makeInvisible();
+        }
     }
 
     private void erase(){
@@ -106,6 +124,21 @@ public class Trap
         return valorValidar;
     }
 
+    public void makePuncture(int x,int height){
+        System.out.println(x);
+        ArrayList<ArrayList<Integer>> hueco=new ArrayList<ArrayList<Integer>>();
+        for(int i=0;i<matrizComparar.size();i++){
+            if(x==matrizComparar.get(i).get(0)){
+                hueco.add(matrizComparar.get(i));
+                matrizComparar.remove(i);
+                System.out.println(matrizComparar.get(i));
+            }
+        }
+        Puncture punto=new Puncture(hueco.get(1).get(0),(hueco.get(1).get(1)-height)*-1,hueco);
+        punctures.add(punto);
+   
+    }
+    
     public boolean compararPosicion(ArrayList<Integer> posicion){
         boolean valorValidar=false;
         if(matrizComparar.contains(posicion)){
@@ -113,36 +146,51 @@ public class Trap
         }
         return valorValidar;
     }
-    public void changeSize(int newHeight,int x) {
-        erase();
-        distance = newHeight;
-        moveVertical(x);
-        draw();
-    }
-    public ArrayList<Integer> puntofinal(ArrayList<Integer> puntoInicial){
-        ArrayList<Integer> puntofinal=new ArrayList<Integer> ();
-        if(matrizComparar.contains(puntoInicial)){
-            System.out.println("entre");
+
+    public ArrayList<Rain> rainTrap(ArrayList<Integer> posicionInicial,int height){
+        ArrayList<Rain> rains=new ArrayList<Rain>();
+        for(int i=0;i<punctures.size();i++){
+            superficialPunctures.add(punctures.get(i).punctureSuperficial());
         }
-        for(int i=0;i<matrizComparar.size();i++){
-            if(matrizComparar.get(i).get(0)==puntoInicial.get(0) && matrizComparar.get(i).get(1)==puntoInicial.get(1)){
-                for(int j=puntoInicial.get(0);j<matrizComparar.get(i).get(0)+1;j++){
-                    ArrayList<Integer> localPost=new ArrayList<Integer>();
-                    localPost.add(j);
-                    localPost.add((j*pendiente)+corte);
-                    if(matrizComparar.contains(localPost)==false){
-                        puntofinal=localPost;
-                        break;
-                    }else if(j==matrizComparar.get(i).get(0) && (matrizComparar.contains(localPost))){
-                        puntofinal=matrizComparar.get(matrizComparar.size()-1);
-                        break;
-                    }
+        ArrayList<ArrayList<Integer>> ordenada=new ArrayList<ArrayList<Integer>>();
+        int z=0;
+        while(superficialPunctures.size()!=0){
+            ArrayList<Integer> parcial=superficialPunctures.get(0);
+            int x=parcial.get(0);
+            for(int k=1;k<superficialPunctures.size();k++){
+                if(x>superficialPunctures.get(k).get(0)){
+                    parcial=superficialPunctures.get(k);
+                    x=parcial.get(0);
+                    z=k;
+                }
+            }
+            ordenada.add(parcial);
+            superficialPunctures.remove(z);
+        }
+        superficialPunctures=ordenada;
+        for(int j=posicionInicial.get(0);j<superficialPunctures.get(0).get(superficialPunctures.size()-1);j++){
+            for(int k=0;k<superficialTrap.size();k++){
+                if(j==superficialTrap.get(k).get(0)){
+                    Rain rain =new Rain(j,superficialTrap.get(k).get(1));
+                    rain.makeVisible();
+                    rains.add(rain);
                 }
             }
         }
-        System.out.println(puntofinal);
-        return puntofinal;
+
+        return rains;
     }
+
+    public void changeSize(int newHeight,int x) {
+        erase();
+        distance = newHeight;
+        moveVertical(x); 
+        draw();
+        for(Puncture i: punctures){
+            i.changeSize(5);
+        }
+    }
+
 
     public void remove(){
         erase();

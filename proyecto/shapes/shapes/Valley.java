@@ -15,7 +15,6 @@ public class Valley
     private ArrayList<Integer> xinicial=new ArrayList<Integer>();
     private ArrayList<Integer> xfinal=new ArrayList<Integer>();
     private ArrayList<Trap> traps=new ArrayList<Trap>();
-    private ArrayList<Puncture> punctures=new ArrayList<Puncture>();
     private Vineyard viñedo;
     private int[] Higher;
     private int[] Lower;
@@ -57,9 +56,7 @@ public class Valley
         for(Trap oneTrap: traps){
             oneTrap.makeVisible();
         }
-        for(Puncture onePuncture: punctures){
-            onePuncture.makeVisible();
-        }
+       
         for(Rain llover: lluvia){
             llover.makeVisible();
         }
@@ -74,9 +71,7 @@ public class Valley
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,50);
             }
-            for(Puncture onePuncture: punctures){
-                onePuncture.changeSize(10);
-            }
+            
             for(Rain llover: lluvia){
                 llover.changeSize(10);
             } 
@@ -89,9 +84,6 @@ public class Valley
             }
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,-50);
-            }
-            for(Puncture onePuncture: punctures){
-                onePuncture.changeSize(10);
             }
             for(Rain llover: lluvia){
                 llover.changeSize(10);
@@ -156,78 +148,73 @@ public class Valley
     /**
      * Create the punctures in the traps
      */
-    public void makePuncture(int x,int y){
-        ArrayList<Integer> huecosX=new ArrayList<Integer>();
-        ArrayList<Integer> huecosY=new ArrayList<Integer>();
+    public void makePuncture(int trap,int x){
+        traps.get(trap-1).makePuncture(x,height);
+        //ArrayList<Integer> huecosX=new ArrayList<Integer>();
+        //ArrayList<Integer> huecosY=new ArrayList<Integer>();
         //x=Math.abs(x-width);
-        y=Math.abs(y-height);       
-        Puncture nuevoPuncture=new Puncture(x,y);
-        Trap nuevoTrap=new Trap(Higher,Lower);
-        if(traps.size()>0){
-            if(nuevoTrap.verificateCoordinates(x,y)){
-                huecosX.add(x);
-                huecosY.add(y);
-                nuevoPuncture.Coordinates(x,y);
-                punctures.add(nuevoPuncture);
-            }else{
-                System.out.println("no hay lona");
-                System.out.println(x);
-                System.out.println(y);
-            }
-        }else{
-            System.out.println("No hay traps");
-        }
-
+        //y=Math.abs(y-height);       
+        //Puncture nuevoPuncture=new Puncture(x,y);
+        //Trap nuevoTrap=new Trap(Higher,Lower);
+        //if(traps.size()>0){
+         //   if(nuevoTrap.verificateCoordinates(x,y)){
+           //     huecosX.add(x);
+           //     huecosY.add(y);
+                //nuevoPuncture.Coordinates(x,y);
+                //punctures.add(nuevoPuncture);
+            //}else{
+              //  System.out.println("no hay lona");
+              //  System.out.println(x);
+              //  System.out.println(y);
+            //}
+        //}else{
+          //  System.out.println("No hay traps");
+        //}
+        
     }
 
     /**
      * Remove the punctures one by one
      */
-    public void removePuncture(int position){
-        if(punctures.size()>0){
-            for(int p=0;p<punctures.size();p++){
-                if(p==position){
-                    punctures.remove(p);
-                    punctures.get(p).makeInvisible();
-                }
-            }
-        }else{
-            System.out.println("No hay hueco en esa coordenada");
-        }
-    }
+    //public void removePuncture(int position){
+      //  if(punctures.size()>0){
+      //      for(int p=0;p<punctures.size();p++){
+      //          if(p==position){
+      //              punctures.remove(p);
+      //              punctures.get(p).makeInvisible();
+      //          }
+      //      }
+      //  }else{
+      //      System.out.println("No hay hueco en esa coordenada");
+      //  }
+    //}
 
     public void startRain(int x){
-        ArrayList<Integer> posicionLados=new ArrayList<Integer>();
-        posicionLados.add(x);
-        posicionLados.add(x+10);
-        for(int k=0;k<posicionLados.size();k++){
-            ArrayList<Integer> posicionRectangle=new ArrayList<Integer>();
-            posicionRectangle.add(posicionLados.get(k));
-            posicionRectangle.add(0);
-            ArrayList<Integer> posicionInicial=new ArrayList<Integer>();
-            ArrayList<Integer> posicionFinal=new ArrayList<Integer>();
-            while(posicionRectangle.get(1)!=height-10 ){
-                for(int i=0;i<traps.size();i++){
-                    if(traps.get(i).compararPosicion(posicionRectangle)){
-                        Rain lluviaRectangle= new Rain(posicionRectangle.get(0),Math.abs(posicionRectangle.get(1)-height));
-                        lluvia.add(lluviaRectangle);
-                        posicionInicial=posicionRectangle;
-                        posicionInicial.set(1,Math.abs(posicionInicial.get(1)-height));
-                        posicionFinal=traps.get(i).puntofinal(posicionInicial);
-                        System.out.println(posicionInicial+" "+posicionFinal);
-                        posicionFinal.set(1,Math.abs(posicionFinal.get(1)-height));
-                        Rain lluviaTrap= new Rain(posicionInicial,posicionFinal);
-                        lluvia.add(lluviaTrap);
-                        posicionRectangle.set(0,posicionFinal.get(0));
-                        posicionRectangle.set(1,posicionFinal.get(1));
-                        break;
-                    }
-                    else if(i+1==traps.size()){
-                        posicionRectangle.set(1,posicionRectangle.get(1)+1);
-                        break;
-                    }
+        int i=0;
+        ArrayList<Integer> posicion = new ArrayList<Integer>();
+        posicion.add(x);
+        posicion.add(0);
+        System.out.println(posicion+""+posicion.get(0)+""+i);
+        while(posicion.get(1)<=height-10 && i!=traps.size()){
+            System.out.println("kasa");
+            if(traps.get(i).compararPosicion(posicion)){
+                System.out.println("kasota");
+                ArrayList<Rain> lista=traps.get(i).rainTrap(posicion,height);
+                for(Rain n:lista){
+                    lluvia.add(n);
                 }
-
+                ArrayList<Integer> posicionLista= lista.get(lista.size()-1).posicion();
+                posicion.set(0,posicionLista.get(0));
+                posicion.set(1,posicionLista.get(1));
+            }else{
+                System.out.println("kasita");
+                Rain gota =new Rain(posicion.get(0),posicion.get(1));
+                gota.makeVisible();
+                lluvia.add(gota);
+                System.out.println(lluvia.size());
+                posicion.set(0,posicion.get(0));
+                posicion.set(1,posicion.get(1)+1);
+                i++;
             }
         }
     }

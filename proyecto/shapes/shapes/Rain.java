@@ -1,100 +1,163 @@
 package shapes;
+
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 import java.util.*;
 /**
- * Write a description of class Rain here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * A circle that can be manipulated and that draws itself on a canvas.
+ * 
+ * @author  Michael Kolling and David J. Barnes
+ * @version 1.0.  (15 July 2000) 
  */
-public class Rain
-{
-    // instance variables - replace the example below with your own
-    private Object lluvia;
-    private int distance=10;
-    private boolean isVisible=false;
-    private int x;
-    private int y;
-    private ArrayList<Integer> posicionInicial;
-    private ArrayList<Integer> posicionFinal;
+
+public class Rain{
+
+    public static double PI=3.1416;
+
+    private int diameter;
+    private int xPosition;
+    private int yPosition;
+    private String color;
+    private boolean isVisible;
+    
     /**
-     * Constructor for objects of class Rain
+     * Create a new circle at default position with default color.public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
      */
-    public Rain(int x,int y)
-    {
-        this.x=x;
-        this.y=y;
-        Rectangle lluvia_parcial = new Rectangle(distance,y);
-        lluvia_parcial.moveHorizontal(x);
-        lluvia_parcial.changeColor("blue");
-        lluvia=lluvia_parcial;
+    public Rain(int xposition,int yposition){
+
+        diameter = 15;
+        this.xPosition = xposition;
+        this.yPosition = yposition-20;
+        color = "blue";
+        isVisible = false;
     }
-    public Rain(ArrayList<Integer> posicionInicial,ArrayList<Integer> posicionFinal)
-    {
-        this.posicionInicial=posicionInicial;
-        this.posicionFinal=posicionFinal;
-        int[] posicionIni=new int[]{posicionInicial.get(0),posicionInicial.get(1)};;
-        int[] posicionFin= new int[]{posicionFinal.get(0),posicionFinal.get(1)};
-        Trap lluvia_parcial = new Trap(posicionIni,posicionFin);
-        lluvia_parcial.changeColor("blue");
-        lluvia=lluvia_parcial;
+    public ArrayList<Integer> posicion(){
+        ArrayList<Integer> posiciones=new ArrayList<Integer>();
+        posiciones.add(xPosition);
+        posiciones.add(yPosition);
+        return posiciones;
     }
+    /**
+     * Make this circle visible. If it was already visible, do nothing.
+     */
     public void makeVisible(){
-        if(lluvia instanceof Trap){
-            Trap nuevaLluvia =(Trap) lluvia;
-            nuevaLluvia.makeVisible();
-        }else if(lluvia instanceof Rectangle){
-            Rectangle nuevaLluvia =(Rectangle) lluvia;
-            nuevaLluvia.makeVisible();
-        }
-        isVisible=true;
-    }
-    public void changeSize(int x){
-        if(lluvia instanceof Trap){
-            Trap nuevaLluvia =(Trap) lluvia;
-            nuevaLluvia.changeSize(10,x);
-            
-        }else if(lluvia instanceof Rectangle){
-            Rectangle nuevaLluvia =(Rectangle) lluvia;
-            nuevaLluvia.changeSize(nuevaLluvia.getmedidas()[0],nuevaLluvia.getmedidas()[1]);
-            nuevaLluvia.moveVertical(x);
-        }
-        isVisible=true;
-    }
-    public void makeInvisible(){
-        if(lluvia instanceof Trap){
-            Trap nuevaLluvia =(Trap) lluvia;
-            nuevaLluvia.makeInvisible();
-        }else if(lluvia instanceof Rectangle){
-            Rectangle nuevaLluvia =(Rectangle) lluvia;
-            nuevaLluvia.makeInvisible();
-        }
-        isVisible=false;
+        isVisible = true;
+        draw();
     }
 
-    public void moveVertical(int distance){
-        if(lluvia instanceof Trap){
-            Trap nuevaLluvia =(Trap) lluvia;
-            nuevaLluvia.moveVertical(distance);
-        }else if(lluvia instanceof Rectangle){
-            Rectangle nuevaLluvia =(Rectangle) lluvia;
-            nuevaLluvia.moveVertical(distance);
-        }
-    }
-    public void moveHorizontal(int distance){
-        if(lluvia instanceof Trap){
-            Trap nuevaLluvia =(Trap) lluvia;
-            nuevaLluvia.moveHorizontal(distance);
-        }else if(lluvia instanceof Rectangle){
-            Rectangle nuevaLluvia =(Rectangle) lluvia;
-            nuevaLluvia.moveHorizontal(distance);
-        }
-    }
-    
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Make this circle invisible. If it was already invisible, do nothing.
      */
-    
+    public void makeInvisible(){
+        erase();
+        isVisible = false;
+    }
+
+    /**
+     * Move the circle a few pixels to the right.
+     */
+    public void moveRight(){
+        moveHorizontal(20);
+    }
+
+    /**
+     * Move the circle a few pixels to the left.
+     */
+    public void moveLeft(){
+        moveHorizontal(-20);
+    }
+
+    /**
+     * Move the circle a few pixels up.
+     */
+    public void moveUp(){
+        moveVertical(-20);
+    }
+
+    /**
+     * Move the circle a few pixels down.
+     */
+    public void moveDown(){
+        moveVertical(20);
+    }
+
+    /**
+     * Move the circle horizontally.
+     * @param distance the desired distance in pixels
+     */
+    public void moveHorizontal(int distance){
+        erase();
+        xPosition += distance;
+        draw();
+    }
+
+    /**
+     * Move the circle vertically.
+     * @param distance the desired distance in pixels
+     */
+    public void moveVertical(int distance){
+        erase();
+        yPosition += distance;
+        draw();
+    }
+
+    /**
+     * Change the size.
+     * @param newDiameter the new size (in pixels). Size must be >=0.
+     */
+    public void changeSize(int newDiameter){
+        erase();
+        diameter = newDiameter;
+        draw();
+    }
+
+    /**
+     * Change the color. 
+     * @param color the new color. Valid colors are "red", "yellow", "blue", "green",
+     * "magenta" and "black".
+     */
+    public void changeColor(String newColor){
+        color = newColor;
+        draw();
+    }
+    /**
+     * Create the puncture inside the Valley class
+     */
+    public void Coordinates(int x,int y){
+        
+        if(isVisible){
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, 
+                new Ellipse2D.Double(x,y, 
+                    diameter, diameter));
+            canvas.wait(10);
+        }
+    }
+
+    /*
+     * Draw the circle with current specifications on screen.
+     */
+    public void draw(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, 
+                new Ellipse2D.Double(xPosition, yPosition, 
+                    diameter, diameter));
+            canvas.wait(10);
+        }
+    }
+
+    /*
+     * Erase the circle on screen.
+     */
+    private void erase(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.erase(this);
+        }
+    }
 }
+
