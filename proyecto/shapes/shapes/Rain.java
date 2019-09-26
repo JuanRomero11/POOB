@@ -22,7 +22,6 @@ public class Rain{
     private int yPosition;
     private String color;
     private boolean isVisible;
-    
     /**
      * Create a new circle at default position with default color.public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
      */
@@ -30,7 +29,7 @@ public class Rain{
 
         diameter = 15;
         this.xPosition = xposition;
-        this.yPosition = yposition-20;
+        this.yPosition = (yposition-20);
         color = "blue";
         isVisible = false;
     }

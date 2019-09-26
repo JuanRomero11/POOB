@@ -32,7 +32,7 @@ public class Puncture{
         diameter = 15;
         this.xPosition = xposition;
         this.yPosition = yposition-20;
-        color = "yellow";
+        color = "green";
         isVisible = false;
     }
     public ArrayList<Integer> punctureSuperficial(){

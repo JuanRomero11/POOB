@@ -28,12 +28,19 @@ public class Trap
         matrizComparar=new ArrayList<ArrayList<Integer>>();
         punctures=new ArrayList<Puncture>();
         superficialTrap=new ArrayList<ArrayList<Integer>>();
+        superficialPunctures=new ArrayList<ArrayList<Integer>>();
         pendiente=(lowerEnd[1]-higherEnd[1])/(lowerEnd[0]-higherEnd[0]);
         corte=(higherEnd[1]-(pendiente*higherEnd[0]));
         ArrayList<Integer> lower=new ArrayList<Integer>();
-        lower.add(lowerEnd[0]);
-        lower.add(lowerEnd[1]);
-        superficialTrap.add(lower);
+        if(pendiente<0){
+            lower.add(lowerEnd[0]);
+            lower.add(lowerEnd[1]);
+            superficialPunctures.add(lower);
+        }else{
+            lower.add(higherEnd[0]);
+            lower.add(higherEnd[1]);
+            superficialPunctures.add(lower);
+        }
         for(int j=0;j<10;j++){
             for(int i=higherEnd[0]-j;i<lowerEnd[0]-j;i++){
                 ArrayList<Integer> localPost=new ArrayList<Integer>();
@@ -134,11 +141,16 @@ public class Trap
                 System.out.println(matrizComparar.get(i));
             }
         }
-        Puncture punto=new Puncture(hueco.get(1).get(0),(hueco.get(1).get(1)-height)*-1,hueco);
+        int r=0;
+        if(pendiente<0){
+            r=20;
+        }
+        Puncture punto=new Puncture(hueco.get(1).get(0),(hueco.get(1).get(1)-height-r)*-1,hueco);
         punctures.add(punto);
-   
+        
+
     }
-    
+
     public boolean compararPosicion(ArrayList<Integer> posicion){
         boolean valorValidar=false;
         if(matrizComparar.contains(posicion)){
@@ -157,23 +169,49 @@ public class Trap
         while(superficialPunctures.size()!=0){
             ArrayList<Integer> parcial=superficialPunctures.get(0);
             int x=parcial.get(0);
+            System.out.println(superficialPunctures);
             for(int k=1;k<superficialPunctures.size();k++){
                 if(x>superficialPunctures.get(k).get(0)){
-                    parcial=superficialPunctures.get(k);
+
+                    parcial.set(0,superficialPunctures.get(k).get(0));
+                    parcial.set(1,superficialPunctures.get(k).get(1));
                     x=parcial.get(0);
                     z=k;
                 }
             }
             ordenada.add(parcial);
-            superficialPunctures.remove(z);
+            
+            if(pendiente<0){
+                superficialPunctures.remove(z-1);
+            }else{
+                superficialPunctures.remove(z);
+            }
+            
         }
-        superficialPunctures=ordenada;
-        for(int j=posicionInicial.get(0);j<superficialPunctures.get(0).get(superficialPunctures.size()-1);j++){
-            for(int k=0;k<superficialTrap.size();k++){
-                if(j==superficialTrap.get(k).get(0)){
-                    Rain rain =new Rain(j,superficialTrap.get(k).get(1));
-                    rain.makeVisible();
-                    rains.add(rain);
+
+        if(pendiente>0){
+            for(int j=ordenada.get(ordenada.size()-1).get(0);j<posicionInicial.get(0);j++){
+                for(int k=superficialTrap.size()-1;k>0;k--){
+                    if(j==superficialTrap.get(k).get(0)){
+                        Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));
+                        rain.makeVisible();
+                        rains.add(rain);
+                    }
+                }
+            }
+            Rain base=rains.get(rains.size()-1);
+            rains.set(rains.size()-1,rains.get(0));
+            rains.set(0,base);
+        }
+        else{
+            System.out.println(ordenada.get(0).size());
+            for(int j=posicionInicial.get(0);j<ordenada.get(0).get(0);j++){
+                for(int k=0;k<superficialTrap.size();k++){
+                    if(j==superficialTrap.get(k).get(0)){
+                        Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));
+                        rain.makeVisible();
+                        rains.add(rain);
+                    }
                 }
             }
         }
@@ -190,7 +228,6 @@ public class Trap
             i.changeSize(5);
         }
     }
-
 
     public void remove(){
         erase();

@@ -116,8 +116,10 @@ public class Valley
         Lower = lowerEnd;
         //higherEnd[0]=Math.abs(higherEnd[0]-width);
         higherEnd[1]=Math.abs(higherEnd[1]-height);
+        //higherEnd[1]=Math.abs(higherEnd[1]);
         //lowerEnd[0]=Math.abs(lowerEnd[0]-width);
         lowerEnd[1]=Math.abs(lowerEnd[1]-height);
+        //lowerEnd[1]=Math.abs(lowerEnd[1]);
         if(traps.size()==0){
             traps.add(nuevoTrap);
         }else{
@@ -194,28 +196,33 @@ public class Valley
         ArrayList<Integer> posicion = new ArrayList<Integer>();
         posicion.add(x);
         posicion.add(0);
-        System.out.println(posicion+""+posicion.get(0)+""+i);
-        while(posicion.get(1)<=height-10 && i!=traps.size()){
-            System.out.println("kasa");
+        System.out.println(posicion+""+posicion.get(0)+"//"+i);
+        while(posicion.get(1)<height-10){
+            //System.out.println("kasa");
             if(traps.get(i).compararPosicion(posicion)){
-                System.out.println("kasota");
-                ArrayList<Rain> lista=traps.get(i).rainTrap(posicion,height);
+              //  System.out.println("kasota");
+                ArrayList<Rain> lista=new ArrayList<Rain>();
+                lista=traps.get(i).rainTrap(posicion,height);
                 for(Rain n:lista){
                     lluvia.add(n);
                 }
                 ArrayList<Integer> posicionLista= lista.get(lista.size()-1).posicion();
                 posicion.set(0,posicionLista.get(0));
                 posicion.set(1,posicionLista.get(1));
+                
             }else{
-                System.out.println("kasita");
-                Rain gota =new Rain(posicion.get(0),posicion.get(1));
+              //  System.out.println("kasita");
+                Rain gota =new Rain(posicion.get(0),(posicion.get(1)));
                 gota.makeVisible();
                 lluvia.add(gota);
-                System.out.println(lluvia.size());
+                //System.out.println(lluvia.size());
                 posicion.set(0,posicion.get(0));
                 posicion.set(1,posicion.get(1)+1);
-                i++;
+                if(i+1<traps.size()){
+                    i++;
+                }
             }
+            
         }
     }
 }
