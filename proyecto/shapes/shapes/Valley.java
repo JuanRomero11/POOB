@@ -199,7 +199,7 @@ public class Valley
         System.out.println(posicion+""+posicion.get(0)+"//"+i);
         while(posicion.get(1)<height-10){
             //System.out.println("kasa");
-            if(traps.get(i).compararPosicion(posicion)){
+            if(traps.size()>0 && traps.get(i).compararPosicion(posicion)){
               //  System.out.println("kasota");
                 ArrayList<Rain> lista=new ArrayList<Rain>();
                 lista=traps.get(i).rainTrap(posicion,height);
