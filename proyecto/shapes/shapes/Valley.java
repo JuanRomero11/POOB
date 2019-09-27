@@ -56,7 +56,7 @@ public class Valley
         for(Trap oneTrap: traps){
             oneTrap.makeVisible();
         }
-       
+
         for(Rain llover: lluvia){
             llover.makeVisible();
         }
@@ -71,11 +71,11 @@ public class Valley
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,50);
             }
-            
+
             for(Rain llover: lluvia){
                 llover.changeSize(10);
             } 
-            
+
         }
         if(x=="-"){
             valle.changeSize(width-50,height-50);
@@ -136,6 +136,20 @@ public class Valley
                 traps.add(nuevoTrap);
             }
         }
+        System.out.println(listaviñedo.size());
+        /*if(listaviñedo.size()>0){
+            System.out.println("E");
+            for(int i=0;i<xinicial.size();i++){
+                System.out.println("EE");
+                if(xinicial.get(i)<=higherEnd[0] && lowerEnd[0]<=xfinal.get(i)){
+                    System.out.println("EEEEE");
+                    valle.makeVisible();
+                    traps.get(i).changeColor(listaviñedo.get(i).getColor());
+                    traps.get(i).makeVisible();
+                    break;
+                }
+            }
+        }**/
     }
 
     /**
@@ -159,36 +173,36 @@ public class Valley
         //Puncture nuevoPuncture=new Puncture(x,y);
         //Trap nuevoTrap=new Trap(Higher,Lower);
         //if(traps.size()>0){
-         //   if(nuevoTrap.verificateCoordinates(x,y)){
-           //     huecosX.add(x);
-           //     huecosY.add(y);
-                //nuevoPuncture.Coordinates(x,y);
-                //punctures.add(nuevoPuncture);
-            //}else{
-              //  System.out.println("no hay lona");
-              //  System.out.println(x);
-              //  System.out.println(y);
-            //}
+        //   if(nuevoTrap.verificateCoordinates(x,y)){
+        //     huecosX.add(x);
+        //     huecosY.add(y);
+        //nuevoPuncture.Coordinates(x,y);
+        //punctures.add(nuevoPuncture);
         //}else{
-          //  System.out.println("No hay traps");
+        //  System.out.println("no hay lona");
+        //  System.out.println(x);
+        //  System.out.println(y);
         //}
-        
+        //}else{
+        //  System.out.println("No hay traps");
+        //}
+
     }
 
     /**
      * Remove the punctures one by one
      */
     //public void removePuncture(int position){
-      //  if(punctures.size()>0){
-      //      for(int p=0;p<punctures.size();p++){
-      //          if(p==position){
-      //              punctures.remove(p);
-      //              punctures.get(p).makeInvisible();
-      //          }
-      //      }
-      //  }else{
-      //      System.out.println("No hay hueco en esa coordenada");
-      //  }
+    //  if(punctures.size()>0){
+    //      for(int p=0;p<punctures.size();p++){
+    //          if(p==position){
+    //              punctures.remove(p);
+    //              punctures.get(p).makeInvisible();
+    //          }
+    //      }
+    //  }else{
+    //      System.out.println("No hay hueco en esa coordenada");
+    //  }
     //}
 
     public void startRain(int x){
@@ -200,7 +214,7 @@ public class Valley
         while(posicion.get(1)<height-10){
             //System.out.println("kasa");
             if(traps.size()>0 && traps.get(i).compararPosicion(posicion)){
-              //  System.out.println("kasota");
+                //  System.out.println("kasota");
                 ArrayList<Rain> lista=new ArrayList<Rain>();
                 lista=traps.get(i).rainTrap(posicion,height);
                 for(Rain n:lista){
@@ -209,9 +223,9 @@ public class Valley
                 ArrayList<Integer> posicionLista= lista.get(lista.size()-1).posicion();
                 posicion.set(0,posicionLista.get(0));
                 posicion.set(1,posicionLista.get(1));
-                
+
             }else{
-              //  System.out.println("kasita");
+                //  System.out.println("kasita");
                 Rain gota =new Rain(posicion.get(0),(posicion.get(1)));
                 gota.makeVisible();
                 lluvia.add(gota);
@@ -222,7 +236,7 @@ public class Valley
                     i++;
                 }
             }
-            
+
         }
     }
 }

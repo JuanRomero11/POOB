@@ -44,4 +44,11 @@ public class Vineyard
         viñedo.changeSize(10,(xfinal-xinicial)+x);
         viñedo.moveVertical(x);
     }
+    
+    public String getColor(){
+        return this.color;
+    }
+    public void setColor(String color){
+        this.color=color;
+    }
 }
