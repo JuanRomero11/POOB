@@ -31,6 +31,7 @@ public class Trap
         superficialPunctures=new ArrayList<ArrayList<Integer>>();
         pendiente=(lowerEnd[1]-higherEnd[1])/(lowerEnd[0]-higherEnd[0]);
         corte=(higherEnd[1]-(pendiente*higherEnd[0]));
+        color="black";
         ArrayList<Integer> lower=new ArrayList<Integer>();
         if(pendiente<0){
             lower.add(lowerEnd[0]);
@@ -56,24 +57,51 @@ public class Trap
         isVisible = false;
     }
 
-    private void draw(){
+    public void colorViñedo(int xinicial,int xfinal,String newColor){
+        System.out.println(newColor);
+        if((xinicial<=iniciales[0] && iniciales[0]<=xfinal) && (xinicial<=finales[0] && finales[0]<=xfinal)){
+            this.changeColor(newColor);
+        }
+    }
+    public void removePuncture(int posicionHueco){
+        ArrayList<ArrayList<Integer>> huecos=new ArrayList<ArrayList<Integer>>();
+        for(int i=0;i<punctures.size();i++){
+            if(posicionHueco==i){
+                huecos= new ArrayList<ArrayList<Integer>>(punctures.get(i).huecos());
+                punctures.get(i).makeInvisible();
+                punctures.remove(i);
+            }
+        }
+        for(int j=0;j<superficialPunctures.size();j++){
+            for(int k=0;k<huecos.size();k++){
+                if(superficialPunctures.get(j).get(0) ==huecos.get(k).get(0) && superficialPunctures.get(j).get(1) ==huecos.get(k).get(1)){
+                    superficialPunctures.remove(j);
+            }
+            
+        }
+       for(int z=0;z<huecos.size();z++){
+           matrizComparar.add(huecos.get(z));
+        }
+    }
+}
+    private void drawTrap(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             int[] xpoints = { finales[0]-distance, iniciales[0]-distance,iniciales[0],finales[0] };
             int[] ypoints = { finales[1], iniciales[1], iniciales[1],finales[1]};
-            canvas.draw(this,"black", new Polygon(xpoints, ypoints, 4));
+            canvas.draw(this,color, new Polygon(xpoints, ypoints, 4));
             canvas.wait(10);
         }
     }
 
     public void changeColor(String newColor){
         color = newColor;
-        draw();
+        drawTrap();
     }
 
     public void makeVisible(){
         isVisible = true;
-        draw();
+        drawTrap();
         for(int i=0;i<punctures.size();i++){
             punctures.get(i).makeVisible();
         }
@@ -98,14 +126,14 @@ public class Trap
         erase();
         iniciales[0]=Math.abs(iniciales[0]-distance);
         finales[0]=Math.abs(iniciales[0]-distance);
-        draw();
+        drawTrap();
     }
 
     public void moveVertical(int distance){
         erase();
         iniciales[1]=Math.abs(iniciales[1]+distance);
         finales[1]=Math.abs(finales[1]+distance);
-        draw();
+        drawTrap();
     }
 
     public boolean validar(Trap trapComparar){
@@ -147,10 +175,8 @@ public class Trap
         }
         Puncture punto=new Puncture(hueco.get(1).get(0),(hueco.get(1).get(1)-height-r)*-1,hueco);
         punctures.add(punto);
-        
 
     }
-
     public boolean compararPosicion(ArrayList<Integer> posicion){
         boolean valorValidar=false;
         if(matrizComparar.contains(posicion)){
@@ -169,10 +195,8 @@ public class Trap
         while(superficialPunctures.size()!=0){
             ArrayList<Integer> parcial=superficialPunctures.get(0);
             int x=parcial.get(0);
-            System.out.println(superficialPunctures);
             for(int k=1;k<superficialPunctures.size();k++){
                 if(x>superficialPunctures.get(k).get(0)){
-
                     parcial.set(0,superficialPunctures.get(k).get(0));
                     parcial.set(1,superficialPunctures.get(k).get(1));
                     x=parcial.get(0);
@@ -180,13 +204,11 @@ public class Trap
                 }
             }
             ordenada.add(parcial);
-            
             if(pendiente<0){
                 superficialPunctures.remove(z-1);
             }else{
                 superficialPunctures.remove(z);
             }
-            
         }
 
         if(pendiente>0){
@@ -194,7 +216,6 @@ public class Trap
                 for(int k=superficialTrap.size()-1;k>0;k--){
                     if(j==superficialTrap.get(k).get(0)){
                         Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));
-                        rain.makeVisible();
                         rains.add(rain);
                     }
                 }
@@ -204,12 +225,11 @@ public class Trap
             rains.set(0,base);
         }
         else{
-            System.out.println(ordenada.get(0).size());
+
             for(int j=posicionInicial.get(0);j<ordenada.get(0).get(0);j++){
                 for(int k=0;k<superficialTrap.size();k++){
                     if(j==superficialTrap.get(k).get(0)){
-                        Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));
-                        rain.makeVisible();
+                        Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));            
                         rains.add(rain);
                     }
                 }
@@ -223,7 +243,7 @@ public class Trap
         erase();
         distance = newHeight;
         moveVertical(x); 
-        draw();
+        drawTrap();
         for(Puncture i: punctures){
             i.changeSize(5);
         }
@@ -250,11 +270,12 @@ public class Trap
         }
         return verificar;
     }
+
     public String getColor(){
         return this.color;
     }
-    
-public void setColor(String color){
+
+    public void setColor(String color){
         this.color=color;
     }
 }

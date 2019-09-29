@@ -38,6 +38,10 @@ public class Puncture{
     public ArrayList<Integer> punctureSuperficial(){
         return huecos.get(0);
     }
+    
+    public ArrayList<ArrayList<Integer>> huecos(){
+        return this.huecos;
+    }
     /**
      * Make this circle visible. If it was already visible, do nothing.
      */
@@ -152,10 +156,12 @@ public class Puncture{
      * Erase the circle on screen.
      */
     private void erase(){
+       
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             canvas.erase(this);
         }
+        
     }
 }
 

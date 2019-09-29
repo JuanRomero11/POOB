@@ -1,4 +1,3 @@
-
 package shapes;
 import java.util.*;
 import java.awt.geom.Area;
@@ -15,10 +14,6 @@ public class Valley
     private ArrayList<Integer> xinicial=new ArrayList<Integer>();
     private ArrayList<Integer> xfinal=new ArrayList<Integer>();
     private ArrayList<Trap> traps=new ArrayList<Trap>();
-    private Vineyard viñedo;
-    private int[] Higher;
-    private int[] Lower;
-    private int distance=0;
     public Valley(int width,int height)
     {
         valle= new Rectangle(width,height);
@@ -30,6 +25,7 @@ public class Valley
      * Create the vineyards in the valley
      */
     public void openVineyard(String name,int xi,int xf){
+        Vineyard viñedo;
         boolean verificar=true;
         for(int i=0;i< xinicial.size();i++){
             if((xi<=xfinal.get(i) && xfinal.get(i)<=xf) || (xi<=xinicial.get(i) && xinicial.get(i)<=xf) || (xinicial.get(i)<=xi && xf<=xfinal.get(i)) || (xi<=xinicial.get(i) && xfinal.get(i)<=xf)){
@@ -61,7 +57,19 @@ public class Valley
             llover.makeVisible();
         }
     }
+    public void makeInvisible(){
+        valle.makeInvisible();
+        for(Vineyard viñedo: listaviñedo){
+            viñedo.makeInvisible();
+        }
+        for(Trap oneTrap: traps){
+            oneTrap.makeInvisible();
+        }
 
+        for(Rain llover: lluvia){
+            llover.makeInvisible();
+        }
+    }
     public void Zoom(String x){
         if(x=="+"){
             valle.changeSize(width+50,height+50);
@@ -73,7 +81,7 @@ public class Valley
             }
 
             for(Rain llover: lluvia){
-                llover.changeSize(10);
+                llover.changeSize(5);
             } 
 
         }
@@ -86,7 +94,7 @@ public class Valley
                 oneTrap.changeSize(10,-50);
             }
             for(Rain llover: lluvia){
-                llover.changeSize(10);
+                llover.changeSize(-5);
             } 
 
         }
@@ -112,13 +120,16 @@ public class Valley
      */
     public void addTrap(int[] higherEnd,int[] lowerEnd){
         Trap nuevoTrap=new Trap(higherEnd,lowerEnd);
-        Higher = higherEnd;
-        Lower = lowerEnd;
+        
         //higherEnd[0]=Math.abs(higherEnd[0]-width);
         higherEnd[1]=Math.abs(higherEnd[1]-height);
         //higherEnd[1]=Math.abs(higherEnd[1]);
         //lowerEnd[0]=Math.abs(lowerEnd[0]-width);
+        for(Vineyard oneVineyard: listaviñedo){
+            nuevoTrap.colorViñedo(oneVineyard.posiciones()[0],oneVineyard.posiciones()[1],oneVineyard.getColor());
+        }
         lowerEnd[1]=Math.abs(lowerEnd[1]-height);
+        
         //lowerEnd[1]=Math.abs(lowerEnd[1]);
         if(traps.size()==0){
             traps.add(nuevoTrap);
@@ -136,74 +147,42 @@ public class Valley
                 traps.add(nuevoTrap);
             }
         }
-        System.out.println(listaviñedo.size());
-        /*if(listaviñedo.size()>0){
-            System.out.println("E");
-            for(int i=0;i<xinicial.size();i++){
-                System.out.println("EE");
-                if(xinicial.get(i)<=higherEnd[0] && lowerEnd[0]<=xfinal.get(i)){
-                    System.out.println("EEEEE");
-                    valle.makeVisible();
-                    traps.get(i).changeColor(listaviñedo.get(i).getColor());
-                    traps.get(i).makeVisible();
-                    break;
-                }
-            }
-        }**/
-    }
 
+    }
+    public String[] rainFalls(){
+        String[] viñedosRegandose=new String[lluvia.size()];
+        int cont=0;
+        for(int i=0;i<listaviñedo.size();i++){
+            if(listaviñedo.get(i).posiciones()[0]<= lluvia.get(lluvia.size()-1).posicion().get(0) &&  lluvia.get(lluvia.size()-1).posicion().get(0)<=listaviñedo.get(i).posiciones()[1] && listaviñedo.get(i).posiciones()[1]== lluvia.get(lluvia.size()-1).posicion().get(1)+2){
+                viñedosRegandose[cont]=new String(listaviñedo.get(i).getName());
+                cont++;
+            }
+        }
+        System.out.println(viñedosRegandose[0]);
+        return viñedosRegandose;
+    }
     /**
      * Remove the traps one by one
      */
     public void removeTrap(int position){
-        traps.get(position).remove();
-        traps.remove(position);
-        traps.get(position).makeInvisible();
+        traps.get(position-1).makeInvisible();
+        traps.get(position-1).remove();
+        traps.remove(position-1);
     }
 
     /**
      * Create the punctures in the traps
      */
     public void makePuncture(int trap,int x){
-        traps.get(trap-1).makePuncture(x,height);
-        //ArrayList<Integer> huecosX=new ArrayList<Integer>();
-        //ArrayList<Integer> huecosY=new ArrayList<Integer>();
-        //x=Math.abs(x-width);
-        //y=Math.abs(y-height);       
-        //Puncture nuevoPuncture=new Puncture(x,y);
-        //Trap nuevoTrap=new Trap(Higher,Lower);
-        //if(traps.size()>0){
-        //   if(nuevoTrap.verificateCoordinates(x,y)){
-        //     huecosX.add(x);
-        //     huecosY.add(y);
-        //nuevoPuncture.Coordinates(x,y);
-        //punctures.add(nuevoPuncture);
-        //}else{
-        //  System.out.println("no hay lona");
-        //  System.out.println(x);
-        //  System.out.println(y);
-        //}
-        //}else{
-        //  System.out.println("No hay traps");
-        //}
-
+        traps.get(trap-1).makePuncture(x,height);     
     }
 
     /**
      * Remove the punctures one by one
      */
-    //public void removePuncture(int position){
-    //  if(punctures.size()>0){
-    //      for(int p=0;p<punctures.size();p++){
-    //          if(p==position){
-    //              punctures.remove(p);
-    //              punctures.get(p).makeInvisible();
-    //          }
-    //      }
-    //  }else{
-    //      System.out.println("No hay hueco en esa coordenada");
-    //  }
-    //}
+    public void patchPuncture(int trapPosition,int position){
+      traps.get(trapPosition-1).removePuncture(position-1);
+    }
 
     public void startRain(int x){
         int i=0;
@@ -227,7 +206,7 @@ public class Valley
             }else{
                 //  System.out.println("kasita");
                 Rain gota =new Rain(posicion.get(0),(posicion.get(1)));
-                gota.makeVisible();
+                
                 lluvia.add(gota);
                 //System.out.println(lluvia.size());
                 posicion.set(0,posicion.get(0));
