@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d6e62a4f-d97f-42ce-8e23-439af6d893b0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Canvas$CanvasPane.class" beforeDir="false" afterPath="$PROJECT_DIR$/Canvas$CanvasPane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Canvas$ShapeDescription.class" beforeDir="false" afterPath="$PROJECT_DIR$/Canvas$ShapeDescription.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Canvas.class" beforeDir="false" afterPath="$PROJECT_DIR$/Canvas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Circle.class" beforeDir="false" afterPath="$PROJECT_DIR$/Circle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Puncture.class" beforeDir="false" afterPath="$PROJECT_DIR$/Puncture.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rain.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Trap.class" beforeDir="false" afterPath="$PROJECT_DIR$/Trap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Triangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/Triangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Valley.class" beforeDir="false" afterPath="$PROJECT_DIR$/Valley.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ValleyTest01.class" beforeDir="false" afterPath="$PROJECT_DIR$/ValleyTest01.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vineyard.class" beforeDir="false" afterPath="$PROJECT_DIR$/Vineyard.class" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1Ri5FsVcpcwybHmwSTH1kuyjM35" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d6e62a4f-d97f-42ce-8e23-439af6d893b0" name="Default Changelist" comment="" />
+      <created>1570136975870</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1570136975870</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

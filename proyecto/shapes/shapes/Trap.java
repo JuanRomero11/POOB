@@ -56,8 +56,7 @@ public class Trap
         }
         isVisible = false;
     }
-
-    public void colorViñedo(int xinicial,int xfinal,String newColor){
+    public void colorVinedo(int xinicial,int xfinal,String newColor){
         System.out.println(newColor);
         if((xinicial<=iniciales[0] && iniciales[0]<=xfinal) && (xinicial<=finales[0] && finales[0]<=xfinal)){
             this.changeColor(newColor);

@@ -4,9 +4,9 @@ import java.awt.geom.Area;
 public class Valley
 {
     private Rectangle valle;
-    private ArrayList<Vineyard> listaviñedo=new ArrayList<Vineyard>();
+    private ArrayList<Vineyard> listavinedo;
     private ArrayList<Rain> lluvia=new ArrayList<Rain>();
-    private ArrayList<String> namesViñedos=new ArrayList<String>();
+    private ArrayList<String> namesVinedos=new ArrayList<String>();
     private int width;
     private int height;
     private Trap creacion;
@@ -19,20 +19,19 @@ public class Valley
         valle= new Rectangle(width,height);
         this.width=width;
         this.height=height;
-        
+        listavinedo=new ArrayList<Vineyard>();
     }
 
     /**
      * Create the vineyards in the valley
      */
     public void openVineyard(String name,int xi,int xf){
-        Vineyard viñedo;
+        Vineyard vinedo;
         boolean verificar=true;
         booleano=true;
-
         for(int i=0;i<xinicial.size();i++){
             if((xi<0 || xf>=width) || (xi<=xfinal.get(i) && xfinal.get(i)<=xf) || (xi<=xinicial.get(i) && xinicial.get(i)<=xf) || (xinicial.get(i)<=xi && xf<=xfinal.get(i)) || (xi<=xinicial.get(i) && xfinal.get(i)<=xf)){
-                System.out.println("En las coordenadas ingresadas ya se encuentra un viñedo");
+                System.out.println("En las coordenadas ingresadas ya se encuentra un vinedo");
                 verificar=false;
                 booleano=false;
                 break;
@@ -40,12 +39,12 @@ public class Valley
         }
 
         if(verificar){
-            viñedo= new Vineyard(name,xi,xf);
-            viñedo.moveVertical(height-10);
-            listaviñedo.add(viñedo);
+            vinedo= new Vineyard(name,xi,xf);
+            vinedo.moveVertical(height-10);
+            listavinedo.add(vinedo);
             xinicial.add(xi);
             xfinal.add(xf);
-            namesViñedos.add(name);
+            namesVinedos.add(name);
         }
     }
 
@@ -55,8 +54,8 @@ public class Valley
     public void makeVisible(){
 
         valle.makeVisible();
-        for(Vineyard viñedo: listaviñedo){
-            viñedo.makeVisible();
+        for(Vineyard vinedo: listavinedo){
+            vinedo.makeVisible();
         }
         for(Trap oneTrap: traps){
             oneTrap.makeVisible();
@@ -73,8 +72,8 @@ public class Valley
     public void makeInvisible(){
 
         valle.makeInvisible();
-        for(Vineyard viñedo: listaviñedo){
-            viñedo.makeInvisible();
+        for(Vineyard vinedo: listavinedo){
+            vinedo.makeInvisible();
         }
         for(Trap oneTrap: traps){
             oneTrap.makeInvisible();
@@ -92,8 +91,8 @@ public class Valley
         booleano =false;
         if(x=="+"){
             valle.changeSize(width+50,height+50);
-            for(Vineyard viñedo: listaviñedo){
-                viñedo.changeSize(50);
+            for(Vineyard vinedo: listavinedo){
+                vinedo.changeSize(50);
             }
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,50);
@@ -106,8 +105,8 @@ public class Valley
         }
         if(x=="-"){
             valle.changeSize(width-50,height-50);
-            for(Vineyard viñedo: listaviñedo){
-                viñedo.changeSize(-50);
+            for(Vineyard vinedo: listavinedo){
+                vinedo.changeSize(-50);
             }
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,-50);
@@ -125,14 +124,14 @@ public class Valley
     public void closeVineyard(String name){
         booleano = false;
 
-        for(int i=0;i<namesViñedos.size();i++){
+        for(int i=0;i<namesVinedos.size();i++){
             booleano=true;
-            if(name==namesViñedos.get(i)){
-                namesViñedos.remove(i);
+            if(name==namesVinedos.get(i)){
+                namesVinedos.remove(i);
                 xinicial.remove(i);
                 xfinal.remove(i);
-                listaviñedo.get(i).makeInvisible();
-                listaviñedo.remove(i);
+                listavinedo.get(i).makeInvisible();
+                listavinedo.remove(i);
             }
         }
 
@@ -147,8 +146,8 @@ public class Valley
 
             Trap nuevoTrap=new Trap(higherEnd,lowerEnd);
             higherEnd[1]=Math.abs(higherEnd[1]-height);
-            for(Vineyard oneVineyard: listaviñedo){
-                nuevoTrap.colorViñedo(oneVineyard.posiciones()[0],oneVineyard.posiciones()[1],oneVineyard.getColor());
+            for(Vineyard oneVineyard: listavinedo){
+                nuevoTrap.colorVinedo(oneVineyard.posiciones()[0],oneVineyard.posiciones()[1],oneVineyard.getColor());
             }
             lowerEnd[1]=Math.abs(lowerEnd[1]-height);
             if(traps.size()==0){
@@ -174,17 +173,17 @@ public class Valley
     }
 
     public String[] rainFalls(){
-        String[] viñedosRegandose=new String[lluvia.size()];
+        String[] vinedosRegandose=new String[lluvia.size()];
         int cont=0;
-        for(int i=0;i<listaviñedo.size();i++){
+        for(int i=0;i<listavinedo.size();i++){
             System.out.println("una "+(height-10)+"dos"+lluvia.get(lluvia.size()-1).posicion().get(1));
-            if(listaviñedo.get(i).posiciones()[0]<= lluvia.get(lluvia.size()-1).posicion().get(0) &&  lluvia.get(lluvia.size()-1).posicion().get(0)<=listaviñedo.get(i).posiciones()[1] && height-31== lluvia.get(lluvia.size()-1).posicion().get(1)){
-                viñedosRegandose[cont]=new String(listaviñedo.get(i).getName());
+            if(listavinedo.get(i).posiciones()[0]<= lluvia.get(lluvia.size()-1).posicion().get(0) &&  lluvia.get(lluvia.size()-1).posicion().get(0)<=listavinedo.get(i).posiciones()[1] && height-31== lluvia.get(lluvia.size()-1).posicion().get(1)){
+                vinedosRegandose[cont]=new String(listavinedo.get(i).getName());
                 cont++;
             }
         }
-        System.out.println(viñedosRegandose[0]);
-        return viñedosRegandose;
+        System.out.println(vinedosRegandose[0]);
+        return vinedosRegandose;
     }
 
     /**
