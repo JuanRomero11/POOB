@@ -113,11 +113,11 @@ public class Valley
             }
             for(Rain llover: lluvia){
                 llover.changeSize(-5);
-            } 
+            }   
             booleano =true;
         }
     }
-
+    
     /**
      * Close the vineyards with the name
      */
@@ -136,7 +136,35 @@ public class Valley
         }
 
     }
-
+    public int[][] vineyard(){
+        int[][] lista=new int[listavinedo.size()][2];
+        for(int i=0;i<listavinedo.size();i++){
+           lista[i]=listavinedo.get(i).posiciones();
+        }
+        return lista;
+    } 
+    public int[][][] Traps(){
+        int[][][] lista=new int[1000][1000][1000];
+         for(int i=0;i<traps.size();i++){
+             lista[i]=traps.get(i).posiciones();
+         }
+        return lista;
+    }
+    public int[][][] rains(){
+        int[][][] lista=new int[1000][1000][1000];
+        int x;
+        int y;
+        int[] parcial=new int[1000];
+        int[][] parcial2=new int[1000][2];
+        for(int i=0;i<lluvia.size();i++){
+             x=lluvia.get(i).posicion().get(0);
+             y=lluvia.get(i).posicion().get(1);
+             parcial=new int[]{x,y};
+             parcial2[i]=parcial;
+         }
+        lista[0]=parcial2;
+        return lista;
+    }
     /**
      * Create the traps in the valley
      */
@@ -171,21 +199,17 @@ public class Valley
         }
 
     }
-
     public String[] rainFalls(){
         String[] vinedosRegandose=new String[lluvia.size()];
         int cont=0;
-        for(int i=0;i<listavinedo.size();i++){
-            System.out.println("una "+(height-10)+"dos"+lluvia.get(lluvia.size()-1).posicion().get(1));
+        for(int i=0;i<listavinedo.size();i++){        
             if(listavinedo.get(i).posiciones()[0]<= lluvia.get(lluvia.size()-1).posicion().get(0) &&  lluvia.get(lluvia.size()-1).posicion().get(0)<=listavinedo.get(i).posiciones()[1] && height-31== lluvia.get(lluvia.size()-1).posicion().get(1)){
                 vinedosRegandose[cont]=new String(listavinedo.get(i).getName());
                 cont++;
             }
-        }
-        System.out.println(vinedosRegandose[0]);
+        } 
         return vinedosRegandose;
     }
-
     /**
      * Remove the traps one by one
      */
@@ -199,7 +223,6 @@ public class Valley
             booleano=false;
         }
     }
-
     /**
      * Create the punctures in the traps
      */
@@ -211,7 +234,6 @@ public class Valley
             booleano=false;
         }
     }
-
     /**
      * Remove the punctures one by one
      */
@@ -223,7 +245,6 @@ public class Valley
             booleano=false;
         }
     }
-
     /**
      * Make the rain in a x position in to the valley
      */
@@ -260,7 +281,6 @@ public class Valley
         }
 
     }
-
     public boolean ok(){
         return this.booleano; 
     }

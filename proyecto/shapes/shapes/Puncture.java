@@ -14,15 +14,12 @@ import java.util.*;
  */
 
 public class Puncture{
-
     public static double PI=3.1416;
-
     private int diameter;
     private int xPosition;
     private int yPosition;
     private String color;
     private boolean isVisible;
-    
     private ArrayList<ArrayList<Integer>> huecos;
     /**
      * Create a new circle at default position with default color.public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
@@ -38,7 +35,9 @@ public class Puncture{
     public ArrayList<Integer> punctureSuperficial(){
         return huecos.get(0);
     }
-    
+    public int EnPosicionx(){
+        return xPosition;
+    }
     public ArrayList<ArrayList<Integer>> huecos(){
         return this.huecos;
     }
