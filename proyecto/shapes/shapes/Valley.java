@@ -118,7 +118,7 @@ public class Valley extends Rectangle
             booleano =true;
         }
     }
-    
+
     /**
      * Close the vineyards with the name
      */
@@ -137,20 +137,23 @@ public class Valley extends Rectangle
         }
 
     }
+
     public int[][] vineyard(){
         int[][] lista=new int[listavinedo.size()][2];
         for(int i=0;i<listavinedo.size();i++){
-           lista[i]=listavinedo.get(i).posiciones();
+            lista[i]=listavinedo.get(i).posiciones();
         }
         return lista;
     } 
+
     public int[][][] Traps(){
         int[][][] lista=new int[1000][1000][1000];
-         for(int i=0;i<traps.size();i++){
-             lista[i]=traps.get(i).posiciones();
-         }
+        for(int i=0;i<traps.size();i++){
+            lista[i]=traps.get(i).posiciones();
+        }
         return lista;
     }
+
     public int[][][] rains(){
         int[][][] lista=new int[1000][1000][1000];
         int x;
@@ -158,14 +161,15 @@ public class Valley extends Rectangle
         int[] parcial=new int[1000];
         int[][] parcial2=new int[1000][2];
         for(int i=0;i<lluvia.size();i++){
-             x=lluvia.get(i).posicion().get(0);
-             y=lluvia.get(i).posicion().get(1);
-             parcial=new int[]{x,y};
-             parcial2[i]=parcial;
-         }
+            x=lluvia.get(i).posicion().get(0);
+            y=lluvia.get(i).posicion().get(1);
+            parcial=new int[]{x,y};
+            parcial2[i]=parcial;
+        }
         lista[0]=parcial2;
         return lista;
     }
+
     /**
      * Create the traps in the valley
      */
@@ -200,6 +204,7 @@ public class Valley extends Rectangle
         }
 
     }
+
     public String[] rainFalls(){
         String[] vinedosRegandose=new String[lluvia.size()];
         int cont=0;
@@ -211,6 +216,7 @@ public class Valley extends Rectangle
         } 
         return vinedosRegandose;
     }
+
     /**
      * Remove the traps one by one
      */
@@ -224,6 +230,7 @@ public class Valley extends Rectangle
             booleano=false;
         }
     }
+
     /**
      * Create the punctures in the traps
      */
@@ -235,6 +242,7 @@ public class Valley extends Rectangle
             booleano=false;
         }
     }
+
     /**
      * Remove the punctures one by one
      */
@@ -246,6 +254,7 @@ public class Valley extends Rectangle
             booleano=false;
         }
     }
+
     /**
      * Make the rain in a x position in to the valley
      */
@@ -257,6 +266,7 @@ public class Valley extends Rectangle
             ArrayList<Integer> posicion = new ArrayList<Integer>();
             posicion.add(x);
             posicion.add(0);
+            int s=0;
             System.out.println(posicion+""+posicion.get(0)+"//"+i);
             while(posicion.get(1)<height-10){
                 if(traps.size()>0 && traps.get(i).compararPosicion(posicion)){
@@ -265,13 +275,17 @@ public class Valley extends Rectangle
                     for(Rain n:lista){
                         lluvia.add(n);
                     }
+                    
+                   
+                    for(int k=s;k<height-posicion.get(1);k++){
+                        Rain gota =new Rain(posicion.get(0),k);                
+                        lluvia.add(gota); 
+                    }
                     ArrayList<Integer> posicionLista= lista.get(lista.size()-1).posicion();
                     posicion.set(0,posicionLista.get(0));
                     posicion.set(1,posicionLista.get(1));
+                    s=posicionLista.get(1);
                 }else{
-                    Rain gota =new Rain(posicion.get(0),(posicion.get(1)));                
-                    lluvia.add(gota);                
-                    posicion.set(0,posicion.get(0));
                     posicion.set(1,posicion.get(1)+1);
                     if(i+1<traps.size()){
                         i++;
@@ -279,9 +293,14 @@ public class Valley extends Rectangle
                 }
 
             }
+            for(int j=s;j<posicion.get(1);j++){
+                        Rain gota =new Rain(posicion.get(0),j);                
+                        lluvia.add(gota); 
+            }
         }
-
+        
     }
+
     public boolean ok(){
         return this.booleano; 
     }

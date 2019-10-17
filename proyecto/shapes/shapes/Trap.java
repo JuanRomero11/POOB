@@ -211,7 +211,7 @@ public class Trap
             }
             ordenada.add(parcial);
             if(pendiente<0){
-                superficialPunctures.remove(z-1);
+                superficialPunctures.remove(z);
             }else{
                 superficialPunctures.remove(z);
             }
@@ -226,12 +226,12 @@ public class Trap
                     }
                 }
             }
+           
             Rain base=rains.get(rains.size()-1);
             rains.set(rains.size()-1,rains.get(0));
             rains.set(0,base);
         }
         else{
-
             for(int j=posicionInicial.get(0);j<ordenada.get(0).get(0);j++){
                 for(int k=0;k<superficialTrap.size();k++){
                     if(j==superficialTrap.get(k).get(0)){
