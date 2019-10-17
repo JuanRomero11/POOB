@@ -13,7 +13,7 @@ import java.util.*;
  * @version 1.0.  (15 July 2000) 
  */
 
-public class Rain{
+public class Rain extends Circle{
 
     public static double PI=3.1416;
 

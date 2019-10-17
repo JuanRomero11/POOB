@@ -1,5 +1,4 @@
 package shapes;
-
 import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
@@ -13,7 +12,7 @@ import java.util.*;
  * @version 1.0.  (15 July 2000) 
  */
 
-public class Puncture{
+public class Puncture extends Circle{
     public static double PI=3.1416;
     private int diameter;
     private int xPosition;
@@ -29,7 +28,7 @@ public class Puncture{
         diameter = 15;
         this.xPosition = xposition;
         this.yPosition = yposition-20;
-        color = "green";
+        color = "yellow";
         isVisible = false;
     }
     public ArrayList<Integer> punctureSuperficial(){

@@ -1,7 +1,7 @@
 package shapes;
 import java.util.*;
 import java.awt.geom.Area;
-public class Valley
+public class Valley extends Rectangle
 {
     private Rectangle valle;
     private ArrayList<Vineyard> listavinedo;
@@ -16,6 +16,7 @@ public class Valley
     private boolean booleano;
     public Valley(int width,int height)
     {
+        super(width,height);
         valle= new Rectangle(width,height);
         this.width=width;
         this.height=height;

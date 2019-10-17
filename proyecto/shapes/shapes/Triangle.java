@@ -9,7 +9,7 @@ import java.awt.*;
  * @version 1.0  (15 July 2000)
  */
 
-public class Triangle{
+public abstract class Triangle{
     private int height;
     private int width;
     private int xPosition;

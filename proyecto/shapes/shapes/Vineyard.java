@@ -7,7 +7,7 @@ import java.awt.geom.Area;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Vineyard
+public class Vineyard extends Rectangle
 {
     private Rectangle viñedo;
 
@@ -19,11 +19,11 @@ public class Vineyard
     private int distance=10;
     public Vineyard(String name,int xi,int xf)
     {
-
+        super(xf-xi,10);
         String [] colores= {"green","magenta","red","white"};
         int numRandom;
         this.name=name;
-        viñedo= new Rectangle(xf-xi,10);
+        viñedo=new Rectangle(xf-xi,10);
         numRandom = (int) Math.round(Math.random() * 4 ); 
         color=colores[numRandom];
         viñedo.changeColor(color);
