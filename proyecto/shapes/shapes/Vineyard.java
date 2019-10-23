@@ -9,7 +9,7 @@ import java.awt.geom.Area;
  */
 public class Vineyard extends Rectangle
 {
-    private Rectangle viñedo;
+
 
     private int xinicial;
     private int xfinal;
@@ -23,11 +23,11 @@ public class Vineyard extends Rectangle
         String [] colores= {"green","magenta","red","white"};
         int numRandom;
         this.name=name;
-        viñedo=new Rectangle(xf-xi,10);
+        //super=new Rectangle(xf-xi,10);
         numRandom = (int) Math.round(Math.random() * 4 ); 
         color=colores[numRandom];
-        viñedo.changeColor(color);
-        viñedo.moveHorizontal(xi);
+        super.changeColor(color);
+        super.moveHorizontal(xi);
         xinicial=(xi);
         xfinal=(xf);
 
@@ -38,7 +38,7 @@ public class Vineyard extends Rectangle
     }
 
     public void makeVisible(){
-        viñedo.makeVisible();
+        super.makeVisible();
     }
 
     public int[] posiciones(){
@@ -46,17 +46,17 @@ public class Vineyard extends Rectangle
     }
 
     public void makeInvisible(){
-        viñedo.makeInvisible();
+        super.makeInvisible();
     }
 
     public void moveVertical(int distance){
-        viñedo.moveVertical(distance);
+        super.moveVertical(distance);
     }
 
     public void changeSize(int x){
         distance+=x;
-        viñedo.changeSize(10,(xfinal-xinicial)+x);
-        viñedo.moveVertical(x);
+        super.changeSize(10,(xfinal-xinicial)+x);
+        super.moveVertical(x);
     }
 
     public String getColor(){

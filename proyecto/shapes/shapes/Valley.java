@@ -98,10 +98,13 @@ public class Valley extends Rectangle
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,50);
             }
-
+            /*
+             
             for(Rain llover: lluvia){
                 llover.changeSize(5);
             } 
+            * 
+             */
             booleano =true;
         }
         if(x=="-"){
@@ -112,10 +115,13 @@ public class Valley extends Rectangle
             for(Trap oneTrap: traps){
                 oneTrap.changeSize(10,-50);
             }
+            /*
             for(Rain llover: lluvia){
                 llover.changeSize(-5);
             }   
             booleano =true;
+            * 
+             */
         }
     }
 
@@ -153,7 +159,7 @@ public class Valley extends Rectangle
         }
         return lista;
     }
-
+    /*
     public int[][][] rains(){
         int[][][] lista=new int[1000][1000][1000];
         int x;
@@ -169,7 +175,8 @@ public class Valley extends Rectangle
         lista[0]=parcial2;
         return lista;
     }
-
+    * 
+             */
     /**
      * Create the traps in the valley
      */
@@ -205,7 +212,8 @@ public class Valley extends Rectangle
 
     }
 
-    public String[] rainFalls(){
+    /**
+     public String[] rainFalls(){
         String[] vinedosRegandose=new String[lluvia.size()];
         int cont=0;
         for(int i=0;i<listavinedo.size();i++){        
@@ -216,7 +224,9 @@ public class Valley extends Rectangle
         } 
         return vinedosRegandose;
     }
-
+    * 
+     */
+    
     /**
      * Remove the traps one by one
      */
@@ -259,50 +269,28 @@ public class Valley extends Rectangle
      * Make the rain in a x position in to the valley
      */
     public void startRain(int x){
-        booleano=false;
-        if(x>=0 && x<=width){
-            booleano=true;
-            int i=0;
-            ArrayList<Integer> posicion = new ArrayList<Integer>();
-            posicion.add(x);
-            posicion.add(0);
-            int s=0;
-            System.out.println(posicion+""+posicion.get(0)+"//"+i);
-            while(posicion.get(1)<height-10){
-                if(traps.size()>0 && traps.get(i).compararPosicion(posicion)){
-                    ArrayList<Rain> lista=new ArrayList<Rain>();
-                    lista=traps.get(i).rainTrap(posicion,height);
-                    for(Rain n:lista){
-                        lluvia.add(n);
-                    }
-                    
-                   
-                    for(int k=s;k<height-posicion.get(1);k++){
-                        Rain gota =new Rain(posicion.get(0),k);                
-                        lluvia.add(gota); 
-                    }
-                    ArrayList<Integer> posicionLista= lista.get(lista.size()-1).posicion();
-                    posicion.set(0,posicionLista.get(0));
-                    posicion.set(1,posicionLista.get(1));
-                    s=posicionLista.get(1);
-                }else{
-                    posicion.set(1,posicion.get(1)+1);
-                    if(i+1<traps.size()){
-                        i++;
-                    }
-                }
-
-            }
-            for(int j=s;j<posicion.get(1);j++){
-                        Rain gota =new Rain(posicion.get(0),j);                
-                        lluvia.add(gota); 
-            }
-        }
+        Rain r=new Rain(x,0,height);
+        r.fall(this,height);
         
     }
 
     public boolean ok(){
         return this.booleano; 
+    }
+    
+    
+    public double[] neartrap(int xPosition,int yPosition){
+        double d[]=new double [2];
+        ArrayList<Integer> posicion=new ArrayList<Integer>();
+        posicion.add(xPosition);
+        posicion.add(yPosition);
+        for(Trap h: traps){
+            if(h.compararPosicion(posicion)){
+                d[0]=h.getPendiente();
+            }
+            
+        }
+        return d;
     }
 }
 

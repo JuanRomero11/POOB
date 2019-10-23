@@ -14,9 +14,9 @@ public class Trap
     private int[] iniciales;
     private int[] finales;
     private boolean isVisible;
-    private int pendiente;
+    private double pendiente;
     private int distance=10;
-    private int corte;
+    private double corte;
     private ArrayList<ArrayList<Integer>> matrizComparar;
     private ArrayList<Puncture> punctures;
     private ArrayList<ArrayList<Integer>> superficialPunctures;
@@ -46,7 +46,7 @@ public class Trap
             for(int i=higherEnd[0]-j;i<lowerEnd[0]-j;i++){
                 ArrayList<Integer> localPost=new ArrayList<Integer>();
                 localPost.add(i);
-                localPost.add((i*pendiente)+corte);
+                localPost.add((int)(i*pendiente+corte));
                 matrizComparar.add(localPost);
                 System.out.println(localPost);
                 if(j==0){
@@ -120,7 +120,9 @@ public class Trap
             punctures.get(i).makeInvisible();
         }
     }
-
+    public double getPendiente(){
+        return pendiente;
+    }
     private void erase(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
@@ -221,8 +223,8 @@ public class Trap
             for(int j=ordenada.get(ordenada.size()-1).get(0);j<posicionInicial.get(0);j++){
                 for(int k=superficialTrap.size()-1;k>0;k--){
                     if(j==superficialTrap.get(k).get(0)){
-                        Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));
-                        rains.add(rain);
+                        //Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));
+                        //rains.add(rain);
                     }
                 }
             }
@@ -235,8 +237,8 @@ public class Trap
             for(int j=posicionInicial.get(0);j<ordenada.get(0).get(0);j++){
                 for(int k=0;k<superficialTrap.size();k++){
                     if(j==superficialTrap.get(k).get(0)){
-                        Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));            
-                        rains.add(rain);
+                        //Rain rain =new Rain(j,((height-superficialTrap.get(k).get(1))));            
+                       //rains.add(rain);
                     }
                 }
             }

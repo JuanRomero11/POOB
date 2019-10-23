@@ -13,7 +13,7 @@ import java.util.*;
  * @version 1.0.  (15 July 2000) 
  */
 
-public class Rain extends Circle{
+public class Rain{
 
     public static double PI=3.1416;
 
@@ -21,142 +21,80 @@ public class Rain extends Circle{
     private int xPosition;
     private int yPosition;
     private String color;
+    private Circle g;
     private boolean isVisible;
     /**
      * Create a new circle at default position with default color.public Puncture(int xposition,int yposition,ArrayList<ArrayList<Integer>> huecos){
      */
-    public Rain(int xposition,int yposition){
+    public Rain(int xposition,int yposition,int height){
 
-        diameter = 15;
+        diameter = 5;
         this.xPosition = xposition;
-        this.yPosition = (yposition-20);
+        this.yPosition = (yposition-height)*-1;///-20
         color = "blue";
+        g = new Circle(xposition,yPosition,height);
+        
         isVisible = false;
     }
-    public ArrayList<Integer> posicion(){
+ 
+    
+    public void fall(Valley valley,int heigth){
+          makeVisible();
+         double m=0;
+         while(yPosition>heigth-10){
+            
+            if (m>0){
+                
+                g.moveRight();
+                xPosition+=1;
+            }else if(m<0){
+                g.moveLeft();
+                xPosition-=1;
+                
+            }else{
+                g.moveDown();
+                yPosition-=1;
+            }
+            
+            double n[] =valley.neartrap(xPosition,yPosition);
+            
+            m=n[0];
+            System.out.println(m);
+            }   
+    
+    
+    }
+    
+    
+    
+    
+    
+    /**public ArrayList<Integer> posicion(){
         ArrayList<Integer> posiciones=new ArrayList<Integer>();
         posiciones.add(xPosition);
         posiciones.add(yPosition);
         return posiciones;
-    }
+    }*/
+    
+    
+    
+    
+    
+    
     /**
      * Make this circle visible. If it was already visible, do nothing.
      */
     public void makeVisible(){
-        isVisible = true;
-        draw();
+        g.makeVisible();
+        
     }
 
     /**
      * Make this circle invisible. If it was already invisible, do nothing.
      */
     public void makeInvisible(){
-        erase();
-        isVisible = false;
+        g.makeInvisible();
     }
 
-    /**
-     * Move the circle a few pixels to the right.
-     */
-    public void moveRight(){
-        moveHorizontal(20);
-    }
-
-    /**
-     * Move the circle a few pixels to the left.
-     */
-    public void moveLeft(){
-        moveHorizontal(-20);
-    }
-
-    /**
-     * Move the circle a few pixels up.
-     */
-    public void moveUp(){
-        moveVertical(-20);
-    }
-
-    /**
-     * Move the circle a few pixels down.
-     */
-    public void moveDown(){
-        moveVertical(20);
-    }
-
-    /**
-     * Move the circle horizontally.
-     * @param distance the desired distance in pixels
-     */
-    public void moveHorizontal(int distance){
-        erase();
-        xPosition += distance;
-        draw();
-    }
-
-    /**
-     * Move the circle vertically.
-     * @param distance the desired distance in pixels
-     */
-    public void moveVertical(int distance){
-        erase();
-        yPosition += distance;
-        draw();
-    }
-
-    /**
-     * Change the size.
-     * @param newDiameter the new size (in pixels). Size must be >=0.
-     */
-    public void changeSize(int newDiameter){
-        erase();
-        diameter = newDiameter;
-        draw();
-    }
-
-    /**
-     * Change the color. 
-     * @param color the new color. Valid colors are "red", "yellow", "blue", "green",
-     * "magenta" and "black".
-     */
-    public void changeColor(String newColor){
-        color = newColor;
-        draw();
-    }
-    /**
-     * Create the puncture inside the Valley class
-     */
-    public void Coordinates(int x,int y){
-        
-        if(isVisible){
-            Canvas canvas = Canvas.getCanvas();
-            canvas.draw(this, color, 
-                new Ellipse2D.Double(x,y, 
-                    diameter, diameter));
-            canvas.wait(10);
-        }
-    }
-
-    /*
-     * Draw the circle with current specifications on screen.
-     */
-    public void draw(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.draw(this, color, 
-                new Ellipse2D.Double(xPosition, yPosition, 
-                    diameter, diameter));
-            canvas.wait(10);
-        }
-    }
-
-    /*
-     * Erase the circle on screen.
-     */
-    private void erase(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.erase(this);
-        }
-    }
 }
 

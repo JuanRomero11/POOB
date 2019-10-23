@@ -10,7 +10,7 @@ import java.awt.geom.*;
  * @version 1.0.  (15 July 2000) 
  */
 
-public abstract class Circle{
+public  class Circle{
 
     public static double PI=3.1416;
     
@@ -19,7 +19,6 @@ public abstract class Circle{
     private int yPosition;
     private String color;
     private boolean isVisible;
-    
     /**
      * Create a new circle at default position with default color.
      */
@@ -30,7 +29,16 @@ public abstract class Circle{
         color = "blue";
         isVisible = false;
     }
-
+    
+    public Circle(int x,int y,int height){
+        diameter = 30   ;
+        xPosition = x;
+        yPosition= y;
+        color = "blue";
+        isVisible = false;
+    }
+  
+    
     /**
      * Make this circle visible. If it was already visible, do nothing.
      */
@@ -51,14 +59,15 @@ public abstract class Circle{
      * Move the circle a few pixels to the right.
      */
     public void moveRight(){
-        moveHorizontal(20);
+        moveHorizontal(1);
     }
 
     /**
      * Move the circle a few pixels to the left.
      */
+
     public void moveLeft(){
-        moveHorizontal(-20);
+        moveHorizontal(-1);
     }
 
     /**
@@ -72,7 +81,7 @@ public abstract class Circle{
      * Move the circle a few pixels down.
      */
     public void moveDown(){
-        moveVertical(20);
+        moveVertical(-1);
     }
 
     /**
